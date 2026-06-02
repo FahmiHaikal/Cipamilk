@@ -6,7 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $guarded = ['id'];
+    protected $fillable = [
+        'umkm_id',
+        'nama_produk',
+        'slug',
+        'harga',
+        'kategori',
+        'deskripsi',
+        'masa_simpan',
+        'label_gizi',
+        'image',
+    ];
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 
     public function umkm()
     {
