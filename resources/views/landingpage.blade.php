@@ -16,7 +16,7 @@
             </div>
 
             <a href="#katalog" class="brutal-container bg-accent-pink px-8 py-6 w-full brutal-hover flex items-center justify-between group">
-                <span class="text-h2 font-h2 uppercase text-2xl lg:text-3xl">Tentang Kami</span>
+                <span class="text-h2 font-h2 uppercase text-2xl lg:text-3xl">Lihat Katalog</span>
                 <div class="bg-black text-white rounded-full w-12 h-12 flex items-center justify-center transition-transform group-hover:scale-110 group-hover:-rotate-45">
                     <span class="material-symbols-outlined font-bold text-2xl">arrow_forward</span>
                 </div>
@@ -70,7 +70,7 @@
         </div>
     </section>
 
-    <section class="mt-16">
+    <section id="lokasi" class="mt-16">
         <div class="brutal-container bg-accent-green p-8 md:p-12 flex flex-col md:flex-row items-stretch justify-between gap-8 relative overflow-hidden">
             <div class="w-full md:w-1/2 brutal-container bg-surface-dim min-h-[300px] flex items-center justify-center relative bg-slate-200">
                 <div class="flex flex-col items-center gap-2">
