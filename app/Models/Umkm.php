@@ -8,6 +8,11 @@ class Umkm extends Model
 {
     protected $guarded = ['id'];
 
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
+
     public function products()
     {
         return $this->hasMany(Product::class);

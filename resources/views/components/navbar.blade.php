@@ -12,6 +12,18 @@
             <a href="#katalog" class="hidden md:flex brutal-container !rounded-lg bg-accent-yellow px-6 py-2 brutal-hover text-label-bold font-label-bold uppercase">
                 Lihat Produk
             </a>
-        </div>
+            </div>
+            @auth
+    <a href="/dashboard">
+        Dashboard
+    </a>
+
+    <form method="POST" action="{{ route('logout') }}" style="display:inline">
+        @csrf
+        <button type="submit">
+            Logout
+        </button>
+    </form>
+    @endauth
     </nav>
 </header>

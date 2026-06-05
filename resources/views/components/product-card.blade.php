@@ -9,7 +9,25 @@
         <div class="px-5 py-6 flex-grow bg-white flex flex-col justify-center space-y-4">
             <div class="flex justify-between items-start">
                 <span class="text-label-bold font-label-bold text-sm uppercase text-gray-800">{{ $product->umkm->nama_umkm ?? 'Cipageran' }}</span>
-                <span class="text-h2 font-h2 text-xl">Rp {{ number_format($product->harga / 1000, 0, ',', '.') }}k</span>
+                @if($product->discount_price)
+
+                    <div class="flex flex-col items-end">
+                        <span class="text-xs text-gray-500 line-through">
+                            Rp {{ number_format($product->harga / 1000, 0, ',', '.') }}k
+                        </span>
+
+                        <span class="text-h2 font-h2 text-xl text-red-600">
+                            Rp {{ number_format($product->discount_price / 1000, 0, ',', '.') }}k
+                        </span>
+                    </div>
+
+                @else
+
+                    <span class="text-h2 font-h2 text-xl">
+                        Rp {{ number_format($product->harga / 1000, 0, ',', '.') }}k
+                    </span>
+
+                @endif
             </div>
             <p class="text-label-bold font-label-bold text-[11px] leading-relaxed text-gray-600">
                 {{ Str::limit($product->deskripsi, 90) }}
