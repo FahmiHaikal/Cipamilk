@@ -334,15 +334,6 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="harga">Harga</label>
-                        <input
-                            type="number"
-                            id="harga"
-                            name="harga"
-                            value="{{ old('harga', $product->harga) }}">
-                    </div>
-
-                    <div class="form-group">
                         <label for="kategori">Kategori *</label>
                         <select id="kategori" name="kategori" required>
                             <option value="">-- Pilih Kategori --</option>
@@ -369,13 +360,23 @@
                 </div>
 
                 <!-- Label/Tag -->
-                <div class="form-group">
-                    <label for="label">Label/Tag</label>
-                    <input
-                        type="text"
-                        id="label_gizi"
-                        name="label_gizi"
-                        value="{{ old('label_gizi', $product->label_gizi) }}">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="harga">Harga</label>
+                        <input
+                            type="number"
+                            id="harga"
+                            name="harga"
+                            value="{{ old('harga', $product->harga) }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="label">Label/Tag</label>
+                        <input
+                            type="text"
+                            id="label_gizi"
+                            name="label_gizi"
+                            value="{{ old('label_gizi', $product->label_gizi) }}">
+                    </div>
                 </div>
 
                 <!-- Deskripsi -->

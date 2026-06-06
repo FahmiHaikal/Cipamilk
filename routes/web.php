@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\ProductVerificationController;
 use App\Http\Controllers\Umkm\MyProductController;
+use App\Http\Controllers\Umkm\OrderController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -107,5 +108,29 @@ Route::patch(
     '/my-products/{product}/discount',
     [MyProductController::class, 'updateDiscount']
 )->middleware('auth');
+
+
+Route::middleware('auth')->group(function () {
+
+    Route::get(
+        '/orders',
+        [OrderController::class, 'index']
+    )->name('orders');
+
+    Route::get(
+        '/orders/create',
+        [OrderController::class, 'create']
+    );
+
+    Route::post(
+        '/orders',
+        [OrderController::class, 'store']
+    );
+
+    Route::patch(
+        '/orders/{order}/status',
+        [OrderController::class, 'updateStatus']
+    );
+});
 
 require __DIR__ . '/auth.php';

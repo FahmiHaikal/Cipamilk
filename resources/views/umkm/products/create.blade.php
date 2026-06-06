@@ -328,17 +328,6 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="harga">Harga</label>
-                        <input
-                            type="number"
-                            id="harga"
-                            name="harga"
-                            placeholder="Harga produk"
-                            min="0"
-                            required>
-                    </div>
-
-                    <div class="form-group">
                         <label for="kategori">Kategori *</label>
                         <select id="kategori" name="kategori" required>
                             <option value="">-- Pilih Kategori --</option>
@@ -353,10 +342,22 @@
                     </div>
                 </div>
 
-                <!-- Label/Tag -->
-                <div class="form-group">
-                    <label for="label">Label/Tag</label>
-                    <input type="text" id="label" name="label" placeholder="Contoh: Organik, Halal, Promo, Terbaru">
+                <!-- Label/Tag & Harga-->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="harga">Harga</label>
+                        <input
+                            type="number"
+                            id="harga"
+                            name="harga"
+                            placeholder="Harga produk"
+                            min="0"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="label">Label/Tag</label>
+                        <input type="text" id="label" name="label" placeholder="Contoh: Organik, Halal, Promo, Terbaru">
+                    </div>
                 </div>
 
                 <!-- Deskripsi -->

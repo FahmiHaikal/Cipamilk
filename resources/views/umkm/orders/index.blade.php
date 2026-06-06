@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -408,6 +409,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -489,7 +491,8 @@
                 font-size: 13px;
             }
 
-            th, td {
+            th,
+            td {
                 padding: 12px;
             }
 
@@ -501,13 +504,14 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <!-- Navbar -->
         <div class="dashboard-navbar">
-            <a href="#" class="navbar-btn">📊 Dashboard</a>
-            <a href="#" class="navbar-btn">📦 Produk</a>
-            <a href="#" class="navbar-btn active">📋 Pesanan</a>
+            <a href="{{ route('dashboard') }}" class="navbar-btn">📊 Dashboard</a>
+            <a href="{{ route('my-products') }}" class="navbar-btn ">📦 Produk</a>
+            <a href="{{ route('orders') }}" class="navbar-btn active">📋 Pesanan</a>
             <a href="#" class="navbar-btn">📈 Laporan</a>
             <a href="#" class="navbar-btn">⚙️ Pengaturan</a>
         </div>
@@ -517,6 +521,9 @@
             <h1>Pesanan</h1>
             <p>Kelola dan pantau riwayat pembelian produk Anda</p>
         </div>
+
+
+
 
         <!-- Stats Grid -->
         <div class="stats-grid">
@@ -539,50 +546,29 @@
             </div>
         </div>
 
-        <!-- Filter -->
-        <div class="filter-container">
-            <div class="filter-header">🔍 Filter Pesanan</div>
-            <form method="GET" action="#" class="filter-form">
-                <div class="filter-group">
-                    <div class="filter-item">
-                        <label for="product_filter">Filter Per Produk</label>
-                        <select id="product_filter" name="product_id">
-                            <option value="">-- Semua Produk --</option>
-                            @foreach($products as $product)
-                                <option value="{{ $product->id }}" @selected(request('product_id') == $product->id)>
-                                    {{ $product->nama_produk }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="filter-item">
-                        <label for="period_filter">Filter Per Periode</label>
-                        <select id="period_filter" name="period">
-                            <option value="">-- Semua Waktu --</option>
-                            <option value="week" @selected(request('period') == 'week')>Per Minggu</option>
-                            <option value="month" @selected(request('period') == 'month')>Per Bulan</option>
-                            <option value="year" @selected(request('period') == 'year')>Per Tahun</option>
-                        </select>
-                    </div>
-
-                    <div class="filter-item">
-                        <label for="date_from">Dari Tanggal</label>
-                        <input type="date" id="date_from" name="date_from" value="{{ request('date_from') }}">
-                    </div>
-
-                    <div class="filter-item">
-                        <label for="date_to">Sampai Tanggal</label>
-                        <input type="date" id="date_to" name="date_to" value="{{ request('date_to') }}">
-                    </div>
-                </div>
-
-                <div class="filter-actions">
-                    <button type="submit" class="btn-filter btn-filter-primary">🔎 Cari</button>
-                    <a href="{{ route('orders.index') }}" class="btn-filter btn-filter-secondary">↻ Reset</a>
-                </div>
-            </form>
+        <div style="margin-bottom: 32px;">
+            <button class="navbar-btn active" onclick="openModal()">
+                ➕ Tambah Pesanan
+            </button>
         </div>
+
+        <form method="GET" style="margin-bottom:20px;">
+            <select
+                name="sort"
+                onchange="this.form.submit()">
+
+                <option value="newest"
+                    {{ request('sort') == 'newest' ? 'selected' : '' }}>
+                    Terbaru
+                </option>
+
+                <option value="oldest"
+                    {{ request('sort') == 'oldest' ? 'selected' : '' }}>
+                    Terlama
+                </option>
+
+            </select>
+        </form>
 
         <!-- Table -->
         <div class="table-container">
@@ -595,37 +581,60 @@
                 <thead>
                     <tr>
                         <th>No. Pesanan</th>
+                        <th>Pembeli</th>
                         <th>Tanggal</th>
                         <th>Produk</th>
                         <th>Qty</th>
                         <th>Total Harga</th>
                         <th>Status</th>
-                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($orders as $order)
                     <tr>
                         <td><strong>#{{ $order->id }}</strong></td>
-                        <td>{{ $order->created_at->format('d M Y H:i') }}</td>
+                        <td>{{ $order->customer_name }}</td>
+                        <td>{{ \Carbon\Carbon::parse($order->order_date)->format('d M Y') }}</td>
                         <td>{{ $order->product->nama_produk ?? '-' }}</td>
                         <td>{{ $order->quantity }}</td>
-                        <td class="currency">Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
-                        <td>
-                            @if($order->status == 'completed')
-                                <span class="status-badge status-completed">✓ Selesai</span>
-                            @elseif($order->status == 'pending')
-                                <span class="status-badge status-pending">⏱ Pending</span>
-                            @else
-                                <span class="status-badge status-cancelled">✕ Batal</span>
-                            @endif
+                        <td class="currency">
+                            Rp {{ number_format($order->total_price, 0, ',', '.') }}
                         </td>
                         <td>
-                            <div class="action-buttons">
-                                <a href="#" class="btn-action" title="Detail">👁</a>
-                                <a href="#" class="btn-action" title="Edit">✎</a>
-                                <a href="#" class="btn-action delete" title="Hapus" onclick="return confirm('Yakin ingin menghapus?')">🗑</a>
-                            </div>
+                            <form
+                                action="/orders/{{ $order->id }}/status"
+                                method="POST">
+
+                                @csrf
+                                @method('PATCH')
+
+                                <select
+                                    name="status"
+                                    onchange="this.form.submit()">
+
+                                    <option value="pending"
+                                        {{ $order->status == 'pending' ? 'selected' : '' }}>
+                                        Pending
+                                    </option>
+
+                                    <option value="processing"
+                                        {{ $order->status == 'processing' ? 'selected' : '' }}>
+                                        Diproses
+                                    </option>
+
+                                    <option value="completed"
+                                        {{ $order->status == 'completed' ? 'selected' : '' }}>
+                                        Selesai
+                                    </option>
+
+                                    <option value="cancelled"
+                                        {{ $order->status == 'cancelled' ? 'selected' : '' }}>
+                                        Batal
+                                    </option>
+
+                                </select>
+
+                            </form>
                         </td>
                     </tr>
                     @endforeach
@@ -640,5 +649,116 @@
             @endif
         </div>
     </div>
+
+    <div id="orderModal"
+        style="
+     display:none;
+     position:fixed;
+     top:0;
+     left:0;
+     width:100%;
+     height:100%;
+     background:rgba(0,0,0,.5);
+     z-index:9999;">
+
+        <div style="
+        background:white;
+        width:500px;
+        max-width:90%;
+        margin:80px auto;
+        padding:24px;
+        border-radius:12px;">
+
+            <h3 style="margin-bottom:20px;">
+                Tambah Pesanan
+            </h3>
+
+            <form action="/orders" method="POST">
+                @csrf
+
+                <div style="margin-bottom:15px;">
+                    <label>Nama Pembeli</label><br>
+                    <input
+                        type="text"
+                        name="customer_name"
+                        required
+                        style="width:100%;padding:10px;">
+                </div>
+
+                <div style="margin-bottom:15px;">
+                    <label>No WA</label><br>
+                    <input
+                        type="text"
+                        name="customer_phone"
+                        style="width:100%;padding:10px;">
+                </div>
+
+                <div style="margin-bottom:15px;">
+                    <label>Tanggal Pesanan</label><br>
+
+                    <input
+                        type="date"
+                        name="order_date"
+                        value="{{ date('Y-m-d') }}"
+                        required
+                        style="width:100%;padding:10px;">
+                </div>
+
+                <div style="margin-bottom:15px;">
+                    <label>Produk</label><br>
+
+                    <select
+                        name="product_id"
+                        required
+                        style="width:100%;padding:10px;">
+
+                        @foreach($products as $product)
+                        <option value="{{ $product->id }}">
+                            {{ $product->nama_produk }}
+                        </option>
+                        @endforeach
+
+                    </select>
+                </div>
+
+                <div style="margin-bottom:15px;">
+                    <label>Jumlah</label><br>
+
+                    <input
+                        type="number"
+                        name="quantity"
+                        min="1"
+                        required
+                        style="width:100%;padding:10px;">
+                </div>
+
+                <button
+                    type="submit"
+                    class="navbar-btn active">
+                    Simpan
+                </button>
+
+                <button
+                    type="button"
+                    class="navbar-btn"
+                    onclick="closeModal()">
+                    Batal
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('orderModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('orderModal').style.display = 'none';
+        }
+    </script>
 </body>
+
 </html>
