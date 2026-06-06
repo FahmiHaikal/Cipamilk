@@ -9,11 +9,34 @@ class ProductVerificationController extends Controller
 {
     public function index()
     {
-        $products = Product::with('umkm')
-            ->where('status', 'pending')
-            ->get();
+        $status = request('status');
 
-        return view('admin.products.pending', compact('products'));
+        $query = Product::with('umkm');
+
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        $products = $query->latest()->get();
+
+        $totalProducts = Product::count();
+
+        $approvedCount = Product::where(
+            'status',
+            'approved'
+        )->count();
+
+        $pendingCount = Product::where(
+            'status',
+            'pending'
+        )->count();
+
+        return view('admin.products.pending', compact(
+            'products',
+            'totalProducts',
+            'approvedCount',
+            'pendingCount'
+        ));
     }
 
     public function approve(Product $product)

@@ -14,10 +14,6 @@ Route::get('/admin', function () {
     return 'Halo Super Admin';
 })->middleware(['auth', 'super_admin']);
 
-Route::get('/admin/products/pending', function () {
-    return Product::where('status', 'pending')->get();
-})->middleware(['auth', 'super_admin']);
-
 Route::get('/dashboard', function () {
 
     if (Auth::check() && Auth::user()->role === 'super_admin') {
@@ -36,7 +32,6 @@ Route::get('/dashboard', function () {
             ->whereNotNull('discount_price')
             ->count(),
     ]);
-
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -53,12 +48,20 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'super_admin'])->prefix('admin')->group(function () {
 
-    Route::get('/products/pending', [ProductVerificationController::class, 'index']);
+    Route::get(
+        '/products/pending',
+        [ProductVerificationController::class, 'index']
+    )->name('admin.products.pending');
 
-    Route::post('/products/{product}/approve', [ProductVerificationController::class, 'approve']);
+    Route::post(
+        '/products/{product}/approve',
+        [ProductVerificationController::class, 'approve']
+    )->name('admin.products.approve');
 
-    Route::post('/products/{product}/reject', [ProductVerificationController::class, 'reject']);
-
+    Route::post(
+        '/products/{product}/reject',
+        [ProductVerificationController::class, 'reject']
+    )->name('admin.products.reject');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -67,7 +70,6 @@ Route::middleware(['auth'])->group(function () {
         '/my-products',
         [MyProductController::class, 'index']
     )->name('my-products');
-
 });
 
 Route::get(
@@ -94,8 +96,8 @@ Route::post(
     '/my-products',
     [MyProductController::class, 'store']
 )->middleware('auth')
- ->name('my-products.store');
- 
+    ->name('my-products.store');
+
 Route::patch(
     '/my-products/{product}/stock',
     [MyProductController::class, 'updateStock']
@@ -106,4 +108,4 @@ Route::patch(
     [MyProductController::class, 'updateDiscount']
 )->middleware('auth');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
