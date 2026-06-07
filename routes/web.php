@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\ProductVerificationController;
 use App\Http\Controllers\Umkm\MyProductController;
 use App\Http\Controllers\Umkm\OrderController;
+use App\Http\Controllers\Umkm\ReportController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -132,5 +133,12 @@ Route::middleware('auth')->group(function () {
         [OrderController::class, 'updateStatus']
     );
 });
+
+
+Route::get(
+    '/reports',
+    [ReportController::class, 'index']
+)->middleware('auth')
+    ->name('reports');
 
 require __DIR__ . '/auth.php';

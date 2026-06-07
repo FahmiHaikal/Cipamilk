@@ -512,7 +512,7 @@
             <a href="{{ route('dashboard') }}" class="navbar-btn">📊 Dashboard</a>
             <a href="{{ route('my-products') }}" class="navbar-btn ">📦 Produk</a>
             <a href="{{ route('orders') }}" class="navbar-btn active">📋 Pesanan</a>
-            <a href="#" class="navbar-btn">📈 Laporan</a>
+            <a href="{{ route('reports') }}" class="navbar-btn">📈 Laporan</a>
             <a href="#" class="navbar-btn">⚙️ Pengaturan</a>
         </div>
 
