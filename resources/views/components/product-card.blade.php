@@ -1,34 +1,66 @@
-<article class="brutal-container bg-surface-white flex flex-col md:flex-row overflow-hidden h-full">
+{{-- Container Kartu Produk Modern --}}
+<article class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full border border-gray-100 hover:shadow-lg transition-shadow duration-300">
 
-    <div class="flex flex-col w-full md:w-[55%] border-b-[3px] md:border-b-0 md:border-r-[3px] border-border-primary">
-
-        <div class="px-5 py-4 border-b-[3px] border-border-primary {{ $bgColor }}">
-            <h3 class="text-h2 font-h2 text-xl lg:text-2xl uppercase tracking-normal leading-tight text-black">
-                <a href="{{ route('product.detail', $product) }}" class="hover:text-primary transition-colors">
-                    {{ $product->nama_produk }}
-                </a>
-            </h3>
-        </div>
-
-        <div class="px-5 py-6 flex-grow bg-white flex flex-col justify-center space-y-4">
-            <div class="flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-start">
-                <span class="text-label-bold font-label-bold text-xs uppercase text-gray-700">{{ $product->umkm->nama_umkm ?? 'Cipageran' }}</span>
-                <span class="text-h2 font-h2 text-xl leading-none">Rp {{ number_format($product->harga, 0, ',', '.') }}</span>
-            </div>
-            <p class="text-body-md font-body-md text-sm leading-relaxed text-gray-700">
-                {{ Str::limit($product->deskripsi, 110) }}
-            </p>
-        </div>
-
-        <a href="{{ route('product.detail', $product) }}" class="bg-accent-purple px-5 py-4 text-label-bold font-label-bold uppercase flex justify-between items-center border-t-[3px] border-border-primary w-full text-black hover:bg-accent-pink transition-colors cursor-pointer group">
-            <span class="text-sm">Lihat Detail</span>
-            <span class="material-symbols-outlined font-bold group-hover:translate-x-1 transition-transform">arrow_forward</span>
+    {{-- Bagian Atas: Gambar dengan Latar Belakang Abu-abu Terang --}}
+    <div class="bg-gray-100 rounded-t-lg p-4 flex items-center justify-center h-48 relative">
+        <a href="{{ route('product.detail', $product) }}" class="w-full h-full flex items-center justify-center hover:scale-105 transition-transform duration-300" aria-label="Lihat detail {{ $product->nama_produk }}">
+            <img src="{{ asset($product->image) }}" alt="{{ $product->nama_produk }}" class="w-full h-auto object-contain">
         </a>
+        {{-- Overlay FLASH SALE (posisi absolut) --}}
+        <div class="absolute top-2 right-2 flex items-center gap-1">
+            <span class="material-symbols-outlined text-orange-500 text-sm">bolt</span>
+            <span class="text-xs font-bold text-black italic">FLASH SALE</span>
+        </div>
     </div>
 
-    <div class="w-full md:w-[45%] {{ $bgColor }} p-4 flex items-center justify-center min-h-[220px]">
-        <a href="{{ route('product.detail', $product) }}" class="w-full h-full flex items-center justify-center hover:scale-105 transition-transform duration-300" aria-label="Lihat detail {{ $product->nama_produk }}">
-            <img src="{{ asset($product->image) }}" alt="{{ $product->nama_produk }}" class="w-[82%] md:w-[92%] max-w-[250px] h-auto object-contain drop-shadow-[0_12px_12px_rgba(0,0,0,0.12)]">
-        </a>
+    {{-- Banner Diskon --}}
+    <div class="bg-orange-500 text-white text-center py-2 px-4">
+        <span class="text-sm font-semibold">DISKON 20%</span>
+    </div>
+
+    {{-- Bagian Bawah: Detail Teks --}}
+    <div class="px-5 py-6 flex-grow space-y-3">
+
+        {{-- Judul Produk --}}
+        <h3 class="text-xl font-bold text-gray-900">
+            <a href="{{ route('product.detail', $product) }}" class="hover:text-orange-500 transition-colors">
+                {{ $product->nama_produk }}
+            </a>
+        </h3>
+
+        {{-- Detail Produk/Varian (Menggunakan deskripsi yang dipotong) --}}
+        <p class="text-sm text-gray-600">
+            {{ Str::limit($product->deskripsi, 110) }}
+        </p>
+
+        {{-- Kategori (Baris Baru, menggunakan kategori dari database atau statis untuk demo) --}}
+        <div class="flex items-center text-xs text-gray-500 gap-1">
+            <span>Footwear</span>
+            <span>·</span>
+            <span>Sepatu</span>
+        </div>
+
+        {{-- Rating (Baris Baru, statis untuk demo) --}}
+        <div class="flex items-center gap-1">
+            <span class="material-symbols-outlined text-yellow-400 text-sm">star</span>
+            <span class="text-sm text-gray-500">4.9</span>
+        </div>
+
+        {{-- Harga & UMKM (Baris Baru) --}}
+        <div class="flex flex-col gap-1">
+            @php
+                // Menghitung harga baru dengan asumsi diskon 20%
+                $originalPrice = $product->harga;
+                $discountPercentage = 20; // Persentase diskon
+                $discountedPrice = $originalPrice * (1 - ($discountPercentage / 100));
+            @endphp
+            {{-- Harga Lama Coret & UMKM --}}
+            <div class="flex items-center justify-between text-sm text-gray-500">
+                <span class="line-through">Rp {{ number_format($originalPrice, 0, ',', '.') }}</span>
+                <span class="text-xs text-gray-500">UMKM {{ $product->umkm->nama_umkm ?? 'Cipageran' }}</span>
+            </div>
+            {{-- Harga Baru Oranye Tebal --}}
+            <span class="text-2xl font-bold text-orange-500">Rp {{ number_format($discountedPrice, 0, ',', '.') }}</span>
+        </div>
     </div>
 </article>
