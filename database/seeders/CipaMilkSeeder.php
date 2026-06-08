@@ -54,6 +54,9 @@ class CipaMilkSeeder extends Seeder
                 'masa_simpan' => '7 Hari (Kulkas)',
                 'label_gizi' => 'Halal, Probiotik Alami',
                 'image' => 'assets/images/products/yoghurt_botol_ciyo_image_products.png',
+                'diskon' => 10,
+                'rating' => 4.8,
+                'terjual' => 150,
             ],
             [
                 'umkm_id' => $yoghurtCiyoo->id,
@@ -65,6 +68,9 @@ class CipaMilkSeeder extends Seeder
                 'masa_simpan' => '2 Minggu (Freezer)',
                 'label_gizi' => 'Halal, Jajanan Sehat',
                 'image' => 'assets/images/products/es_lilin_yogurth_image_products.png',
+                'diskon' => 10,
+                'rating' => 4.8,
+                'terjual' => 150,
             ],
             [
                 'umkm_id' => $sapiMandiri->id,
@@ -76,6 +82,9 @@ class CipaMilkSeeder extends Seeder
                 'masa_simpan' => '3 Bulan (Freezer)',
                 'label_gizi' => 'Halal, Tinggi Kalsium',
                 'image' => 'assets/images/products/keju_mozarella_lokal_image_products.png',
+                'diskon' => 10,
+                'rating' => 4.8,
+                'terjual' => 150,
             ],
             [
                 'umkm_id' => $yoeriCookies->id,
@@ -87,6 +96,9 @@ class CipaMilkSeeder extends Seeder
                 'masa_simpan' => '5 Hari (Suhu Ruang)',
                 'label_gizi' => 'Sertifikat Halal Resmi',
                 'image' => 'assets/images/products/pie_susu_lembang_image_products.png',
+                'diskon' => 10,
+                'rating' => 4.8,
+                'terjual' => 150,
             ],
             [
                 'umkm_id' => $sapiMandiri->id,
@@ -98,6 +110,9 @@ class CipaMilkSeeder extends Seeder
                 'masa_simpan' => '4 Jam (Suhu Ruang) / 3 Hari (Kulkas)',
                 'label_gizi' => 'Halal, Tanpa Pengawet',
                 'image' => 'assets/images/products/susu_pasteurisasi_segar_image_products.png',
+                'diskon' => 10,
+                'rating' => 4.8,
+                'terjual' => 150,
             ],
         ];
 
