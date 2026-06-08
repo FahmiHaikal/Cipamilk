@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ProductVerificationController;
 use App\Http\Controllers\Umkm\MyProductController;
 use App\Http\Controllers\Umkm\OrderController;
 use App\Http\Controllers\Umkm\ReportController;
+use App\Http\Controllers\Umkm\SettingController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -140,5 +141,24 @@ Route::get(
     [ReportController::class, 'index']
 )->middleware('auth')
     ->name('reports');
+
+
+Route::middleware('auth')->group(function () {
+
+    Route::get(
+        '/settings',
+        [SettingController::class, 'index']
+    )->name('settings.index');
+
+    Route::put(
+        '/settings/profile',
+        [SettingController::class, 'updateProfile']
+    )->name('settings.profile');
+
+    Route::put(
+        '/settings/account',
+        [SettingController::class, 'updateAccount']
+    )->name('settings.account');
+});
 
 require __DIR__ . '/auth.php';
