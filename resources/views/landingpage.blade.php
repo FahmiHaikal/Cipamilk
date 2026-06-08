@@ -181,13 +181,12 @@
 
         </div>
 
-        <!-- Navigasi Swiper -->
         <div class="swiper-button-next !text-green-700 !bg-white !w-12 !h-12 !rounded-full shadow-lg after:!text-lg border border-gray-100 hover:!bg-green-50 transition-colors"></div>
         <div class="swiper-button-prev !text-green-700 !bg-white !w-12 !h-12 !rounded-full shadow-lg after:!text-lg border border-gray-100 hover:!bg-green-50 transition-colors"></div>
     </div>
 </section>
 
-<!-- 5. LOKASI SECTION (Clean UI Redesign) -->
+
 <section id="lokasi" class="max-w-7xl mx-auto px-4 py-16 mb-12">
     <div class="bg-gray-900 rounded-[2.5rem] overflow-hidden flex flex-col md:flex-row shadow-2xl relative">
         <!-- Dekorasi Background -->
