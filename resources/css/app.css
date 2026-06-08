@@ -1,19 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-    /* Palet Warna Neobrutalism */
-    --color-primary: #2b53c4;
-    --color-accent-pink: #F676B6;
-    --color-background-main: #5E81F4;
-    --color-surface-container-low: #f3f2fd;
-    --color-accent-purple: #C98CF4;
-    --color-accent-yellow: #F6F876;
+    /* Palet Warna Baru */
+
+    --color-primary: #8B6B3D;
+    --color-accent-pink: #E8D5B5;
+    --color-background-main: #F8F5EF;
+    --color-surface-container-low: #F3EEE6;
+    --color-accent-purple: #DCC5A0;
+    --color-accent-yellow: #D4A373;
     --color-border-primary: #000000;
-    --color-background: #faf8ff;
-    --color-accent-green: #68F4B1;
-    --color-surface-variant: #e2e1eb;
-    --color-surface-dim: #dad9e3;
-    --color-text-primary: #000000;
+    --color-background: #FFFDF9;
+    --color-accent-green: #CCD5AE;
+    --color-surface-variant: #E7E2D9;
+    --color-surface-dim: #DDD6CC;
+    --color-text-primary: #1A1A1A;
     --color-surface-white: #FFFFFF;
 
     /* Jarak & Ukuran */
@@ -21,7 +22,7 @@
     --spacing-margin-mobile: 16px;
     --spacing-margin-desktop: 40px;
 
-    /* Tipografi Neobrutalism */
+    /* Tipografi */
     --font-h2: "Space Grotesk", sans-serif;
     --font-label-bold: "Space Grotesk", sans-serif;
     --font-body-lg: "Space Grotesk", sans-serif;
@@ -42,5 +43,8 @@
     /* Di sini perbaikannya: kita tidak memakai brutal-border dan brutal-shadow secara berantai */
     .brutal-container {
         @apply rounded-2xl border-[3px] border-black shadow-[6px_6px_0px_0px_#000000];
+    }
+    .font-serif {
+    font-family: 'Cormorant Garamond', serif;
     }
 }

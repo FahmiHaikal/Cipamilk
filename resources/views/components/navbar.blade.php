@@ -1,29 +1,48 @@
-<header class="sticky top-0 z-50 max-w-7xl mx-auto w-full px-margin-mobile md:px-gutter pt-4 md:pt-6">
-    <nav class="relative flex justify-between items-center px-4 md:px-8 py-3 md:py-4 bg-surface-white brutal-container">
-        <div class="flex items-center">
-            <img src="{{ asset('assets/images/cipamilk_logo.png') }}" alt="CipaMilk Logo" class="h-10 md:h-12 scale-125 origin-left object-contain">
-        </div>
-        <div class="hidden md:flex items-center gap-8 text-label-bold font-label-bold uppercase absolute left-1/2 -translate-x-1/2">
-            <a class="text-primary border-b-[3px] border-border-primary pb-1" href="#">Beranda</a>
-            <a class="text-on-surface-variant hover:text-primary transition-colors" href="#katalog">Katalog</a>
-            <a class="text-on-surface-variant hover:text-primary transition-colors" href="#lokasi">Lokasi Kami</a>
-        </div>
-        <div class="flex items-center gap-4">
-            <a href="#katalog" class="hidden md:flex brutal-container !rounded-lg bg-accent-yellow px-6 py-2 brutal-hover text-label-bold font-label-bold uppercase">
-                Lihat Produk
-            </a>
-            </div>
-            @auth
-    <a href="/dashboard">
-        Dashboard
-    </a>
+<header class="bg-[#1a1710] border-b border-white/10 sticky top-0 z-50">
 
-    <form method="POST" action="{{ route('logout') }}" style="display:inline">
-        @csrf
-        <button type="submit">
-            Logout
-        </button>
-    </form>
-    @endauth
-    </nav>
+    <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 flex items-center gap-4">
+
+        {{-- Logo --}}
+        <a href="{{ url('/') }}"
+           class="text-white text-2xl md:text-4xl whitespace-nowrap"
+           style="font-family:'Cormorant Garamond', serif;">
+            CIPA<span class="text-[#c08a4d]">M</span>ILK
+        </a>
+
+        {{-- Search --}}
+        <div class="flex-1 flex justify-center">
+
+            <form class="w-full max-w-2xl">
+                <div class="relative">
+
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                        search
+                    </span>
+
+                    <input
+                        type="text"
+                        placeholder="Cari produk..."
+                        class="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white/10 border border-white/10 text-white placeholder:text-gray-400 focus:outline-none focus:border-[#c08a4d]"
+                    >
+
+                </div>
+            </form>
+
+        </div>
+
+        {{-- Dashboard / Login --}}
+        @auth
+            <a href="/dashboard"
+               class="text-white hover:text-[#c08a4d] whitespace-nowrap transition">
+                Dashboard
+            </a>
+        @else
+            <a href="{{ route('login') }}"
+               class="text-white hover:text-[#c08a4d] whitespace-nowrap transition">
+                Masuk
+            </a>
+        @endauth
+
+    </div>
+
 </header>

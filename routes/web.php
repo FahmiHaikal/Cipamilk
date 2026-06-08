@@ -11,7 +11,12 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/produk', [HomeController::class, 'index'])
+    ->name('landing');
 
 Route::get('/admin', function () {
     return 'Halo Super Admin';
