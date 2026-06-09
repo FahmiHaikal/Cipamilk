@@ -1,111 +1,177 @@
 @extends('layouts.app')
 
-@section('title', $product->nama_produk . ' - CipaMilk')
+@section('title', $product->nama_produk . ' - Super Susu Cipageran')
 
 @section('content')
-    <div class="max-w-5xl mx-auto mt-6 md:mt-10 space-y-6">
-        <div class="flex flex-wrap gap-3">
-            <a href="{{ url('/') }}" class="inline-flex items-center gap-2 rounded-xl border-[3px] border-border-primary bg-surface-white px-4 py-2 text-sm font-label-bold uppercase shadow-[4px_4px_0px_0px_#000000] transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-none">
-                <span class="material-symbols-outlined text-lg">home</span>
-                Beranda
-            </a>
-            <a href="{{ url('/#katalog') }}" class="inline-flex items-center gap-2 rounded-xl border-[3px] border-border-primary bg-accent-yellow px-4 py-2 text-sm font-label-bold uppercase shadow-[4px_4px_0px_0px_#000000] transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-none">
-                <span class="material-symbols-outlined text-lg">grid_view</span>
-                Katalog
-            </a>
-        </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 md:mt-10 mb-20 space-y-8">
+        
+        <!-- Breadcrumb (Navigasi Khas Marketplace) -->
+        <nav class="flex text-sm text-gray-500 font-medium">
+            <a href="{{ url('/') }}" class="hover:text-green-600 transition-colors">Beranda</a>
+            <span class="mx-2">/</span>
+            <a href="{{ url('/#katalog') }}" class="hover:text-green-600 transition-colors">Katalog</a>
+            <span class="mx-2">/</span>
+            <span class="text-gray-900">{{ $product->nama_produk }}</span>
+        </nav>
 
-        <article class="brutal-container bg-surface-white overflow-hidden">
-            <div class="grid grid-cols-1 md:grid-cols-[0.95fr_1.05fr]">
-                <div class="aspect-[4/3] md:aspect-auto bg-accent-green p-6 sm:p-8 flex items-center justify-center border-b-[3px] md:border-b-0 md:border-r-[3px] border-border-primary">
+        <!-- Container Utama: Detail Produk -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_1.2fr]">
+                
+                <!-- Kiri: Foto Produk -->
+                <div class="p-6 md:p-8 lg:p-10 bg-gray-50 flex flex-col justify-center items-center relative">
                     <img
                         src="{{ asset($product->image) }}"
                         alt="{{ $product->nama_produk }}"
-                        class="h-full max-h-[330px] w-full object-contain drop-shadow-[0_16px_18px_rgba(0,0,0,0.14)]"
+                        class="w-full max-w-sm h-auto object-contain hover:scale-105 transition-transform duration-300"
                     >
+                    <!-- Label Halal/Higienis Khas Cipageran -->
+                    <div class="absolute top-6 left-6 bg-white/80 backdrop-blur-sm border border-gray-200 px-3 py-1.5 rounded-full flex items-center gap-1 shadow-sm">
+                        <span class="material-symbols-outlined text-green-500 text-sm">verified</span>
+                        <span class="text-xs font-bold text-green-700">Terverifikasi</span>
+                    </div>
                 </div>
 
-                <div class="bg-white px-5 py-7 sm:px-7 sm:py-8">
-                    <div class="space-y-3">
-                        <p class="w-fit rounded-full border-2 border-border-primary bg-accent-yellow px-3 py-1 text-xs font-label-bold uppercase tracking-normal">
+                <!-- Kanan: Informasi Produk & Checkout -->
+                <div class="p-6 md:p-8 lg:p-10 flex flex-col">
+                    
+                    <div class="mb-2">
+                        <span class="inline-block px-3 py-1 bg-green-50 text-green-600 rounded-full text-xs font-bold tracking-wider uppercase border border-green-100">
                             {{ $product->kategori }}
-                        </p>
-
-                        <h1 class="text-3xl font-h1 leading-tight text-text-primary sm:text-4xl md:text-5xl">
-                            {{ $product->nama_produk }}
-                        </h1>
-
-                        <p class="text-2xl font-h2 text-primary sm:text-3xl">
-                            Rp {{ number_format($product->harga, 0, ',', '.') }}
-                        </p>
+                        </span>
                     </div>
 
-                    <div class="mt-6 space-y-5 text-base leading-7 text-gray-700">
-                        <p>{{ $product->deskripsi }}</p>
+                    <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight mb-2">
+                        {{ $product->nama_produk }}
+                    </h1>
 
-                        <dl class="divide-y-[3px] divide-border-primary border-y-[3px] border-border-primary">
+                    <!-- Rating & Terjual (Jika kolomnya sudah ditambahkan di database) -->
+                    <div class="flex items-center gap-4 mb-6 text-sm">
+                        <div class="flex items-center text-yellow-400">
+                            <span class="material-symbols-outlined text-lg">star</span>
+                            <span class="text-gray-700 font-medium ml-1">{{ $product->rating ?? '4.8' }}</span>
+                        </div>
+                        <div class="w-1 h-1 bg-gray-300 rounded-full"></div>
+                        <span class="text-gray-500">Terjual {{ $product->terjual ?? '100+' }}</span>
+                    </div>
+
+                    <!-- Harga -->
+                    <div class="mb-6 pb-6 border-b border-gray-100">
+                        @if(isset($product->diskon) && $product->diskon > 0)
+                            @php $hargaDiskon = $product->harga - ($product->harga * ($product->diskon / 100)); @endphp
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="text-xs bg-red-100 text-red-600 font-bold px-1.5 py-0.5 rounded">{{ $product->diskon }}%</span>
+                                <span class="text-sm text-gray-400 line-through">Rp {{ number_format($product->harga, 0, ',', '.') }}</span>
+                            </div>
+                            <p class="text-3xl font-extrabold text-orange-500">Rp {{ number_format($hargaDiskon, 0, ',', '.') }}</p>
+                        @else
+                            <p class="text-3xl font-extrabold text-gray-900">Rp {{ number_format($product->harga, 0, ',', '.') }}</p>
+                        @endif
+                    </div>
+
+                    <!-- Deskripsi & Spesifikasi -->
+                    <div class="flex-grow space-y-4 mb-8">
+                        <div>
+                            <h3 class="text-sm font-bold text-gray-900 mb-2">Deskripsi Produk</h3>
+                            <p class="text-sm text-gray-600 leading-relaxed">{{ $product->deskripsi }}</p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 bg-gray-50 p-4 rounded-xl border border-gray-100">
                             @if($product->masa_simpan)
-                                <div class="py-4">
-                                    <dt class="text-xs font-label-bold uppercase text-gray-500">Masa Simpan</dt>
-                                    <dd class="mt-1 font-body-lg text-text-primary">{{ $product->masa_simpan }}</dd>
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wider">Masa Simpan</p>
+                                    <p class="text-sm font-medium text-gray-900">{{ $product->masa_simpan }}</p>
                                 </div>
                             @endif
-
                             @if($product->label_gizi)
-                                <div class="py-4">
-                                    <dt class="text-xs font-label-bold uppercase text-gray-500">Label Produk</dt>
-                                    <dd class="mt-1 font-body-lg text-text-primary">{{ $product->label_gizi }}</dd>
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wider">Kandungan/Label</p>
+                                    <p class="text-sm font-medium text-gray-900">{{ $product->label_gizi }}</p>
                                 </div>
                             @endif
-                        </dl>
+                        </div>
+                    </div>
+
+                    <!-- Logika WhatsApp Checkout -->
+                    @php
+                        // Membersihkan nomor WA (Ubah awalan 0 menjadi 62)
+                        $waNumber = preg_replace('/^0/', '62', $product->umkm->whatsapp);
+                        $waNumber = preg_replace('/[^0-9]/', '', $waNumber);
+
+                        // Merakit template pesan
+                        $pesan = "Halo " . $product->umkm->pemilik . " (" . $product->umkm->nama_umkm . "),\n";
+                        $pesan .= "Saya melihat produk Anda di Web Super Susu Cipageran.\n\n";
+                        $pesan .= "Saya tertarik untuk memesan *" . $product->nama_produk . "*.\n";
+                        $pesan .= "Apakah stoknya masih tersedia?";
+                    @endphp
+
+                    <!-- Tombol Action -->
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <a href="https://wa.me/{{ $waNumber }}?text={{ urlencode($pesan) }}" target="_blank" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 px-6 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg">
+                            <span class="material-symbols-outlined">chat</span>
+                            Beli via WhatsApp
+                        </a>
+                        <!-- Tombol Hubungi Penjual / Tanya-tanya -->
+                        <a href="https://wa.me/{{ $waNumber }}" target="_blank" class="bg-white border border-green-600 text-green-600 hover:bg-green-50 font-bold py-3.5 px-6 rounded-xl flex items-center justify-center transition-all">
+                            Tanya Penjual
+                        </a>
                     </div>
                 </div>
             </div>
-        </article>
+        </div>
 
-        <section class="brutal-container bg-surface-white px-5 py-6 sm:px-7">
-            <p class="text-xs font-label-bold uppercase text-gray-500">Diproduksi oleh</p>
-            <h2 class="mt-2 text-2xl font-h2 leading-tight text-text-primary">
-                {{ $product->umkm->nama_umkm }}
-            </h2>
-
-            <div class="mt-4 space-y-3 text-sm leading-6 text-gray-700">
-                @if($product->umkm->story)
-                    <p>{{ $product->umkm->story }}</p>
-                @endif
-
-                @if($product->umkm->pemilik)
-                    <p>
-                        <span class="font-label-bold text-text-primary">Pemilik:</span>
-                        {{ $product->umkm->pemilik }}
+        <!-- Profil UMKM (Style Toko Marketplace) -->
+        <section class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-4">
+                <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center border-2 border-green-200">
+                    <span class="material-symbols-outlined text-3xl">storefront</span>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-gray-900 flex items-center gap-1">
+                        {{ $product->umkm->nama_umkm }}
+                        <span class="material-symbols-outlined text-green-500 text-sm" title="Mitra Resmi Cipageran">verified</span>
+                    </h2>
+                    <p class="text-sm text-gray-500 flex items-center gap-1 mt-1">
+                        <span class="material-symbols-outlined text-sm">location_on</span>
+                        {{ $product->umkm->alamat ?? 'Sentra Susu Cipageran' }}
                     </p>
-                @endif
-
-                @if($product->umkm->alamat)
-                    <p>
-                        <span class="font-label-bold text-text-primary">Alamat:</span>
-                        {{ $product->umkm->alamat }}
-                    </p>
-                @endif
+                </div>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                <a href="{{ route('umkm.detail', $product->umkm) }}" class="px-6 py-2 border border-gray-300 text-gray-700 rounded-full text-sm font-bold hover:bg-gray-50 hover:border-gray-400 transition-all text-center">
+                    Kunjungi UMKM
+                </a>
             </div>
         </section>
 
+        <!-- Produk Terkait (Grid Modern) -->
         @if($relatedProducts->isNotEmpty())
-            <section class="space-y-4">
-                <div class="flex items-end justify-between gap-4">
-                    <h2 class="text-2xl font-h2 uppercase leading-tight text-black">Produk Lainnya</h2>
-                    <a href="{{ url('/#katalog') }}" class="text-xs font-label-bold uppercase text-black underline decoration-[3px] underline-offset-4">Lihat Semua</a>
+            <section class="pt-8">
+                <div class="flex items-end justify-between mb-6">
+                    <h2 class="text-xl font-bold text-gray-900">Mungkin Anda Suka</h2>
+                    <a href="{{ url('/#katalog') }}" class="text-sm font-semibold text-green-600 hover:text-green-700">Lihat Semua</a>
                 </div>
 
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
                     @foreach($relatedProducts as $relatedProduct)
-                        <a href="{{ route('product.detail', $relatedProduct) }}" class="brutal-container bg-surface-white overflow-hidden transition-all hover:translate-x-[6px] hover:translate-y-[6px] hover:shadow-none">
-                            <div class="aspect-square bg-accent-yellow p-4 flex items-center justify-center border-b-[3px] border-border-primary">
-                                <img src="{{ asset($relatedProduct->image) }}" alt="{{ $relatedProduct->nama_produk }}" class="h-full w-full object-contain">
+                        <a href="{{ route('product.detail', $relatedProduct) }}" class="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-md transition-shadow group flex flex-col">
+                            <div class="bg-gray-50 aspect-square p-4 flex items-center justify-center">
+                                <img src="{{ asset($relatedProduct->image) }}" alt="{{ $relatedProduct->nama_produk }}" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300">
                             </div>
-                            <div class="p-4">
-                                <p class="text-xs font-label-bold uppercase text-gray-500">{{ $relatedProduct->kategori }}</p>
-                                <h3 class="mt-1 text-base font-h2 leading-tight text-black">{{ $relatedProduct->nama_produk }}</h3>
+                            <div class="p-3 flex flex-col flex-grow">
+                                <h3 class="text-sm text-gray-700 truncate mb-1">{{ $relatedProduct->nama_produk }}</h3>
+                                
+                                @if(isset($relatedProduct->diskon) && $relatedProduct->diskon > 0)
+                                    @php $hargaRel = $relatedProduct->harga - ($relatedProduct->harga * ($relatedProduct->diskon / 100)); @endphp
+                                    <p class="text-sm font-bold text-orange-500 mb-1">Rp {{ number_format($hargaRel, 0, ',', '.') }}</p>
+                                    <div class="flex items-center gap-1">
+                                        <span class="text-[10px] bg-red-100 text-red-600 px-1 rounded">{{ $relatedProduct->diskon }}%</span>
+                                        <span class="text-[10px] text-gray-400 line-through">Rp {{ number_format($relatedProduct->harga, 0, ',', '.') }}</span>
+                                    </div>
+                                @else
+                                    <p class="text-sm font-bold text-gray-900 mt-auto">Rp {{ number_format($relatedProduct->harga, 0, ',', '.') }}</p>
+                                @endif
                             </div>
                         </a>
                     @endforeach

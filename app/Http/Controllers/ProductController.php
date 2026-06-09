@@ -7,6 +7,13 @@ use Illuminate\View\View;
 
 class ProductController extends Controller
 {
+    public function index(): View
+    {
+        $products = Product::with('umkm')->latest()->get();
+
+        return view('products.index', compact('products'));
+    }
+
     public function show(Product $product): View
     {
         $product->load('umkm');
@@ -14,7 +21,7 @@ class ProductController extends Controller
             ->with('umkm')
             ->where('id', '!=', $product->id)
             ->latest()
-            ->take(3)
+            ->take(5) 
             ->get();
 
         return view('products.show', compact('product', 'relatedProducts'));
