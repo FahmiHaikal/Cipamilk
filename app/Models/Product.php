@@ -16,6 +16,7 @@ class Product extends Model
         'masa_simpan',
         'label_gizi',
         'image',
+        'status',
     ];
 
     public function getRouteKeyName(): string

@@ -39,8 +39,10 @@ class ProductVerificationController extends Controller
         ));
     }
 
-    public function approve(Product $product)
+    public function approve($id)
     {
+        $product = Product::findOrFail($id);
+
         $product->update([
             'status' => 'approved'
         ]);

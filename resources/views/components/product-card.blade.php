@@ -3,7 +3,7 @@
     <div class="flex-1 flex flex-col">
         <div class="px-5 py-4 border-b-[3px] border-border-primary {{ $bgColor }}">
             <h3 class="text-h2 font-h2 text-xl lg:text-2xl uppercase tracking-normal leading-tight text-black">
-                <a href="{{ route('product.detail', $product) }}" class="hover:text-primary transition-colors">
+                <a href="{{ route('product.detail', ['product' => $product->id]) }}" class="hover:text-primary transition-colors">
                     {{ $product->nama_produk }}
                 </a>
             </h3>
@@ -25,7 +25,7 @@
             </p>
         </div>
 
-        <a href="{{ route('product.detail', $product) }}"
+        <a href="{{ route('product.detail', ['product' => $product->id]) }}"
            class="bg-accent-purple px-5 py-4 text-label-bold font-label-bold uppercase flex justify-between items-center border-t-[3px] border-border-primary w-full text-black hover:bg-accent-pink transition-colors cursor-pointer group">
             <span class="text-sm">Lihat Detail</span>
 
@@ -36,7 +36,7 @@
     </div>
 
     <div class="w-full md:w-[45%] {{ $bgColor }} p-4 flex items-center justify-center min-h-[220px]">
-        <a href="{{ route('product.detail', $product) }}"
+        <a href="{{ route('product.detail', ['product' => $product->id]) }}"
            class="w-full h-full flex items-center justify-center hover:scale-105 transition-transform duration-300"
            aria-label="Lihat detail {{ $product->nama_produk }}">
 

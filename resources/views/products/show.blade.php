@@ -19,7 +19,7 @@
             <div class="grid grid-cols-1 md:grid-cols-[0.95fr_1.05fr]">
                 <div class="aspect-[4/3] md:aspect-auto bg-accent-green p-6 sm:p-8 flex items-center justify-center border-b-[3px] md:border-b-0 md:border-r-[3px] border-border-primary">
                     <img
-                        src="{{ asset($product->image) }}"
+                        src="{{ asset('storage/' . $product->image) }}"
                         alt="{{ $product->nama_produk }}"
                         class="h-full max-h-[330px] w-full object-contain drop-shadow-[0_16px_18px_rgba(0,0,0,0.14)]"
                     >
