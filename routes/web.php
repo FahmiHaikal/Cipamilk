@@ -111,15 +111,15 @@ Route::post(
 )->middleware('auth')
     ->name('my-products.store');
 
-Route::patch(
-    '/my-products/{product}/stock',
-    [MyProductController::class, 'updateStock']
-)->middleware('auth');
+Route::patch('/my-products/{product}/stock',
+    [MyProductController::class, 'updateStock'])
+    ->name('my-products.stock');
 
 Route::patch(
     '/my-products/{product}/discount',
     [MyProductController::class, 'updateDiscount']
-)->middleware('auth');
+)->middleware('auth')
+    ->name('my-products.discount');
 
 
 Route::middleware('auth')->group(function () {

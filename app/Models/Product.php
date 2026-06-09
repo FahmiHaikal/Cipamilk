@@ -16,6 +16,8 @@ class Product extends Model
         'masa_simpan',
         'label_gizi',
         'image',
+        'stock',
+        'discount_price',
         'status',
     ];
 

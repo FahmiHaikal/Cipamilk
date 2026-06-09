@@ -507,7 +507,7 @@
 
                         <td>
                             <form
-                                action="/my-products/{{ $product->id }}/stock"
+                                action="{{ route('my-products.stock', $product) }}"
                                 method="POST"
                                 class="inline-flex gap-2">
 
@@ -529,7 +529,7 @@
 
                         <td>
                             <form
-                                action="/my-products/{{ $product->id }}/discount"
+                                action="{{ route('my-products.discount', $product) }}"
                                 method="POST"
                                 class="inline-flex gap-2">
 
