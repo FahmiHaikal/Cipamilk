@@ -32,16 +32,25 @@
 
         {{-- Dashboard / Login --}}
         @auth
-            <a href="/dashboard"
-               class="text-white hover:text-[#c08a4d] whitespace-nowrap transition">
-                Dashboard
-            </a>
-        @else
-            <a href="{{ route('login') }}"
-               class="text-white hover:text-[#c08a4d] whitespace-nowrap transition">
-                Masuk
-            </a>
-        @endauth
+
+    @if(Auth::user()->role === 'super_admin')
+        <a href="{{ route('admin.products.pending') }}"
+           class="text-white hover:text-[#c08a4d] whitespace-nowrap transition">
+            Dashboard
+        </a>
+    @else
+        <a href="{{ route('dashboard') }}"
+           class="text-white hover:text-[#c08a4d] whitespace-nowrap transition">
+            Dashboard
+        </a>
+    @endif
+
+    @else
+        <a href="{{ route('login') }}"
+        class="text-white hover:text-[#c08a4d] whitespace-nowrap transition">
+            Masuk
+        </a>
+    @endauth
 
     </div>
 

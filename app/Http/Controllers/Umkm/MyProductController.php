@@ -32,7 +32,16 @@ class MyProductController extends Controller
             'deskripsi' => 'required',
             'stock' => 'required|integer|min:0',
             'discount_price' => 'nullable|integer|min:0|max:100',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
+
+        $imagePath = null;
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request
+                ->file('image')
+                ->store('products', 'public');
+        }
 
         Product::create([
             'umkm_id' => Auth::user()->umkm_id,
@@ -42,6 +51,7 @@ class MyProductController extends Controller
             'deskripsi' => $request->deskripsi,
             'stock' => $request->stock,
             'discount_price' => $request->discount_price,
+            'image' => $imagePath,
             'status' => 'pending',
         ]);
 

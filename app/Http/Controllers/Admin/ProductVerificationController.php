@@ -47,13 +47,4 @@ class ProductVerificationController extends Controller
 
         return back();
     }
-
-    public function reject(Product $product)
-    {
-        $product->update([
-            'status' => 'rejected'
-        ]);
-
-        return back();
-    }
 }

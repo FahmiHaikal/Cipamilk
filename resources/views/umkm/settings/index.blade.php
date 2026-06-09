@@ -445,8 +445,7 @@
                                     name="whatsapp"
                                     value="{{ $umkm->whatsapp }}"
                                     placeholder="Contoh: 62812345678"
-                                    required
-                                >
+                                    required>
                             </div>
 
                             <div class="form-group">

@@ -469,118 +469,46 @@
 
         <!-- Header -->
         <div class="page-header">
-            <h1>Approval Produk</h1>
-            <p>Kelola dan validasi produk dari semua UMKM terdaftar</p>
+            <h1>Daftar UMKM</h1>
+            <p>Lihat dan pantau seluruh UMKM yang terdaftar</p>
         </div>
 
         <!-- Stats Grid -->
         <div class="stats-grid">
             <div class="stat-card stat-total">
-                <div class="stat-label">Total Produk</div>
-                <div class="stat-value">{{ $totalProducts }}</div>
-                <div class="stat-icon">📦</div>
+                <div class="stat-label">Total UMKM</div>
+                <div class="stat-value">{{ $umkms->count() }}</div>
+                <div class="stat-icon">🏢</div>
             </div>
-
-            <div class="stat-card stat-approved">
-                <div class="stat-label">Produk Approved</div>
-                <div class="stat-value">{{ $approvedCount }}</div>
-                <div class="stat-icon">✓</div>
-            </div>
-
-            <div class="stat-card stat-pending">
-                <div class="stat-label">Produk Pending</div>
-                <div class="stat-value">{{ $pendingCount }}</div>
-                <div class="stat-icon">⏱</div>
-            </div>
-        </div>
-
-        <!-- Filter -->
-        <div class="filter-container">
-            <a href="{{ route('admin.products.pending') }}"
-                class="filter-btn {{ !request('status') ? 'active' : '' }}">
-                📋 Semua Produk
-            </a>
-            </button>
-            <a href="{{ route('admin.products.pending', ['status' => 'pending']) }}"
-                class="filter-btn {{ request('status') == 'pending' ? 'active' : '' }}">
-                ⏱ Pending
-            </a>
-            </button>
-            <a href="{{ route('admin.products.pending', ['status' => 'approved']) }}"
-                class="filter-btn {{ request('status') == 'approved' ? 'active' : '' }}">
-                ✓ Approved
-            </a>
-            </button>
         </div>
 
         <!-- Table -->
         <div class="table-container">
             <div class="table-header">
-                <h2>📊 Daftar Produk</h2>
+                <h2>📊 Daftar UMKM</h2>
             </div>
 
             <table>
                 <thead>
                     <tr>
-                        <th>Nama Produk</th>
-                        <th>UMKM</th>
-                        <th>Kategori</th>
-                        <th>Status</th>
-                        <th>Tanggal Submit</th>
-                        <th>Aksi</th>
+                        <th>Nama UMKM</th>
+                        <th>Pemilik</th>
+                        <th>Email Akun</th>
+                        <th>Whatsapp</th>
                     </tr>
                 </thead>
                 <tbody>
-                <tbody>
-                    @forelse($products as $product)
+                    @forelse($umkms as $umkm)
                     <tr>
-
-                        <td>
-                            <strong>{{ $product->nama_produk }}</strong>
-                        </td>
-
-                        <td>
-                            {{ $product->umkm->nama_umkm }}
-                        </td>
-
-                        <td>
-                            {{ $product->kategori }}
-                        </td>
-
-                        <td>
-                            @if($product->status == 'approved')
-                            <span class="status-badge status-approved">
-                                ✓ Approved
-                            </span>
-                            @else
-                            <span class="status-badge status-pending">
-                                ⏱ Pending
-                            </span>
-                            @endif
-                        </td>
-
-                        <td>
-                            {{ $product->created_at->format('d M Y H:i') }}
-                        </td>
-
-                        <td>
-                            @if($product->status == 'pending')
-                            <form action="/admin/products/{{ $product->id }}/approve" method="POST">
-                                @csrf
-                                <button class="btn-approve">
-                                    Approve
-                                </button>
-                            </form>
-                            @else
-                            —
-                            @endif
-                        </td>
-
+                        <td>{{ $umkm->nama_umkm }}</td>                     
+                        <td>{{ $umkm->pemilik }}</td>
+                        <td>{{ $umkm->user?->email }}</td>
+                        <td>{{ $umkm->whatsapp }}</td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6" style="text-align:center;padding:30px;">
-                            Belum ada produk ditemukan
+                        <td colspan="4" style="text-align:center;padding:30px;">
+                            Belum ada UMKM terdaftar
                         </td>
                     </tr>
                     @endforelse

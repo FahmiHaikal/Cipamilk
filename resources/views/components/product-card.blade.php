@@ -1,67 +1,61 @@
-<div class="brutal-container bg-surface-white flex flex-col md:flex-row overflow-hidden h-full">
+@php
+    $stok = $product->stok ?? 0;
+    $statusLabel = match(true) {
+        $stok === 0  => 'Habis',
+        $stok <= 10  => 'Stok Terbatas',
+        default      => 'Tersedia',
+    };
+    $statusClass = match(true) {
+        $stok === 0  => 'bg-red-950 text-red-400',
+        $stok <= 10  => 'bg-amber-950 text-amber-400',
+        default      => 'bg-green-950 text-green-400',
+    };
+@endphp
 
-    <div class="flex flex-col w-full md:w-[55%] border-b-[3px] md:border-b-0 md:border-r-[3px] border-border-primary">
+<div class="rounded-xl overflow-hidden flex flex-col h-full transition-all duration-150 cursor-pointer"
+     style="background: #2a2720; box-shadow: 4px 4px 0px #000; transform: translate(0, 0);"
+     onmouseenter="this.style.boxShadow='0px 0px 0px #000'; this.style.transform='translate(4px, 4px)'"
+     onmouseleave="this.style.boxShadow='4px 4px 0px #000'; this.style.transform='translate(0, 0)'">
 
-        <div class="px-5 py-4 border-b-[3px] border-border-primary {{ $bgColor }}">
-            <h3 class="text-h2 font-h2 text-xl lg:text-2xl uppercase tracking-tight text-black">{{ $product->nama_produk }}</h3>
-        </div>
+    {{-- Foto --}}
+    <div class="w-full overflow-hidden" style="aspect-ratio: 4/3;">
+    @if($product->image)
+        <img
+            src="{{ asset('storage/' . $product->image) }}"
+            alt="{{ $product->nama_produk }}"
+            class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+        >
+    @else
+        <img
+            src="{{ asset('assets/images/products/default-product.png') }}"
+            alt="{{ $product->nama_produk }}"
+            class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+        >
+    @endif
+</div>
 
-        <div class="px-5 py-6 flex-grow bg-white flex flex-col justify-center space-y-4">
-            <div class="flex justify-between items-start">
-                <span class="text-label-bold font-label-bold text-sm uppercase text-gray-800">{{ $product->umkm->nama_umkm ?? 'Cipageran' }}</span>
-                @if($product->discount_price)
-
-                    <div class="flex flex-col items-end">
-                        <span class="text-xs text-gray-500 line-through">
-                            Rp {{ number_format($product->harga / 1000, 0, ',', '.') }}k
-                        </span>
-
-                        <span class="text-h2 font-h2 text-xl text-red-600">
-                            Rp {{ number_format($product->discount_price / 1000, 0, ',', '.') }}k
-                        </span>
-                    </div>
-
-                @else
-
-                    <span class="text-h2 font-h2 text-xl">
-                        Rp {{ number_format($product->harga / 1000, 0, ',', '.') }}k
-                    </span>
-
-                @endif
-            </div>
-            <p class="text-label-bold font-label-bold text-[11px] leading-relaxed text-gray-600">
-                {{ Str::limit($product->deskripsi, 90) }}
-            </p>
-        </div>
-
-        @php
-            $waText = urlencode("Halo {$product->umkm->nama_umkm}, saya ingin memesan {$product->nama_produk}");
-        @endphp
-        <a href="https://wa.me/{{ $product->umkm->whatsapp ?? '' }}?text={{ $waText }}" target="_blank" class="bg-[#E4A2FA] px-5 py-4 text-label-bold font-label-bold uppercase flex justify-between items-center border-t-[3px] border-border-primary w-full text-black hover:bg-[#d889f0] transition-colors cursor-pointer group">
-            <span class="text-sm">Pesan via WA</span>
-            <span class="material-symbols-outlined font-bold group-hover:translate-x-1 transition-transform">arrow_forward</span>
-        </a>
+    {{-- Body --}}
+    <div class="px-4 pt-4 pb-0 flex flex-col flex-grow">
+        <span class="inline-block text-[10px] font-medium uppercase tracking-wide px-2 py-1 rounded mb-2 w-fit {{ $bgColor }} text-black">
+            {{ $product->kategori ?? 'Produk' }}
+        </span>
+        <h3 class="text-base font-medium leading-snug mb-1" style="color: #f0ece4;">
+            {{ $product->nama_produk }}
+        </h3>
+        <p class="text-[12px] leading-relaxed flex-grow" style="color: #9a948a;">
+            {{ Str::limit($product->deskripsi, 90) }}
+        </p>
     </div>
 
-    <div class="w-full md:w-[45%] {{ $bgColor }} p-4 flex items-center justify-center min-h-[220px]">
-        <div class="w-full h-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
-            @php
-                $name = strtolower($product->nama_produk);
-                $img = Str::slug($product->nama_produk, '_') . '_image_products.png';
-
-                if (str_contains($name, 'pasteurisasi') || str_contains($name, 'susu segar')) {
-                    $img = 'susu_pasteurisasi_segar_image_products.png';
-                } elseif (str_contains($name, 'es lilin')) {
-                    $img = 'es_lilin_yogurth_image_products.png';
-                } elseif (str_contains($name, 'yoghurt') || str_contains($name, 'ciyo') || str_contains($name, 'cio')) {
-                    $img = 'yoghurt_botol_ciyo_image_products.png';
-                } elseif (str_contains($name, 'keju') || str_contains($name, 'mozarella')) {
-                    $img = 'keju_mozarella_lokal_image_products.png';
-                } elseif (str_contains($name, 'pie')) {
-                    $img = 'pie_susu_lembang_image_products.png';
-                }
-            @endphp
-            <img src="{{ asset('assets/images/products/' . $img) }}" alt="{{ $product->nama_produk }}" class="w-[85%] md:w-[95%] max-w-[260px] h-auto object-contain">
-        </div>
+    {{-- Footer: stok --}}
+    <div class="flex justify-between items-center px-4 py-3 mt-3" style="border-top: 0.5px solid rgba(255,255,255,0.08);">
+        <span class="text-sm" style="color: #c8c2ba;">
+            <span class="text-lg font-medium" style="color: #f0ece4;">{{ $stok }}</span>
+            pcs tersisa
+        </span>
+        <span class="text-[11px] font-medium px-3 py-1 rounded-full {{ $statusClass }}">
+            {{ $statusLabel }}
+        </span>
     </div>
+
 </div>

@@ -133,6 +133,12 @@
             width: 100%;
         }
 
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
         .nav-cart {
             display: flex;
             align-items: center;
@@ -145,6 +151,68 @@
 
         .nav-cart:hover {
             color: var(--accent);
+        }
+
+        /* ─── HAMBURGER ─── */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px 4px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: rgba(255, 255, 255, .75);
+            border-radius: 2px;
+            transition: all .25s;
+        }
+
+        /* ─── MOBILE MENU ─── */
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            background: rgba(26, 23, 16, .98);
+            border-bottom: 1px solid rgba(255, 255, 255, .07);
+            padding: 8px 24px 20px;
+            position: sticky;
+            top: 64px;
+            z-index: 99;
+        }
+
+        .mobile-menu.open {
+            display: flex;
+        }
+
+        .mobile-menu a {
+            padding: 13px 4px;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: .07em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .65);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+            transition: color .2s;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--white);
+        }
+
+        .mobile-menu .mobile-masuk {
+            margin-top: 12px;
+            padding: 12px 20px;
+            border: 1px solid rgba(201, 150, 63, .4) !important;
+            border-radius: 4px;
+            text-align: center;
+            color: var(--accent) !important;
+            border-bottom: 1px solid rgba(201, 150, 63, .4) !important;
         }
 
         /* ─── HERO ─── */
@@ -180,7 +248,6 @@
             background: linear-gradient(to bottom, rgba(26, 23, 16, .2) 0%, rgba(26, 23, 16, .5) 60%, rgba(26, 23, 16, .82) 100%);
         }
 
-        /* Ganti URL ini dengan foto asli nanti */
         .hero-slide:nth-child(1) {
             background-image: url('https://images.unsplash.com/photo-1628088062854-d1870b4553da?w=1600&q=80');
         }
@@ -293,45 +360,6 @@
             border-color: var(--accent);
             background: rgba(201, 150, 63, .08);
             transform: translateY(-2px);
-        }
-
-        /* ─── SCROLL INDICATOR ─── */
-        .scroll-hint {
-            position: absolute;
-            bottom: 36px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            font-size: 10px;
-            letter-spacing: .14em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, .4);
-            animation: fadeUp 1s .8s both;
-        }
-
-        .scroll-hint .line {
-            width: 1px;
-            height: 48px;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, .4), transparent);
-            animation: scrollLine 1.8s ease-in-out infinite;
-        }
-
-        @keyframes scrollLine {
-
-            0%,
-            100% {
-                transform: scaleY(1);
-                opacity: .4;
-            }
-
-            50% {
-                transform: scaleY(.5);
-                opacity: .1;
-            }
         }
 
         /* ─── DOTS ─── */
@@ -846,6 +874,10 @@
                 padding-right: 24px;
             }
 
+            nav {
+                padding: 0 20px;
+            }
+
             .stats {
                 gap: 32px;
                 padding: 24px;
@@ -882,6 +914,14 @@
                 display: none;
             }
 
+            .nav-cart {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
             .cta-banner {
                 text-align: center;
                 justify-content: center;
@@ -914,10 +954,65 @@
             <li><a href="#">Ulasan</a></li>
             <li><a href="#">Kontak</a></li>
         </ul>
-        <a href="#" class="nav-cart">
+        <div class="nav-right">
+
+            @auth
+
+            @if(Auth::user()->role === 'super_admin')
+            <a href="{{ route('admin.products.pending') }}" class="nav-cart">
+                Dashboard
+            </a>
+            @else
+            <a href="{{ route('dashboard') }}" class="nav-cart">
+                Dashboard
+            </a>
+            @endif
+
+            @else
+
+            <a href="{{ route('login') }}" class="nav-cart">
+                Masuk
+            </a>
+
+            @endauth
+
+            <button class="hamburger" id="hamburger">
+                <span id="hb1"></span>
+                <span id="hb2"></span>
+                <span id="hb3"></span>
+            </button>
+
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="#">Tentang Kami</a>
+        <a href="#">Galeri</a>
+        <a href="#">Ulasan</a>
+        <a href="#">Kontak</a>
+
+        @auth
+
+        @if(Auth::user()->role === 'super_admin')
+        <a href="{{ route('admin.products.pending') }}" class="mobile-masuk">
+            Dashboard
+        </a>
+        @else
+        <a href="{{ route('dashboard') }}" class="mobile-masuk">
+            Dashboard
+        </a>
+        @endif
+
+        @else
+
+        <a href="{{ route('login') }}" class="mobile-masuk">
             Masuk
         </a>
-    </nav>
+
+        @endauth
+
+    </div>
 
     <!-- HERO -->
     <section class="hero">
@@ -930,9 +1025,7 @@
             <h1>Susu segar langsung<br><em>dari peternak lokal.</em></h1>
             <p>Produk olahan susu berkualitas tinggi dari peternak Cipageran — segar, alami, dan diproduksi secara berkelanjutan sejak 2014.</p>
             <div class="btn-group">
-                <a href="{{ route('landing') }}" class="btn-primary">
-                    Lihat Produk
-                </a>
+                <a href="{{ route('landing') }}" class="btn-primary">Lihat Produk</a>
                 <a href="#" class="btn-outline">Lokasi Kami</a>
             </div>
         </div>
@@ -945,6 +1038,7 @@
     </section>
 
     <script>
+        // Hero slider
         const slides = document.querySelectorAll('.hero-slide');
         const dots = document.querySelectorAll('.hero-dot');
         let current = 0,
@@ -964,6 +1058,34 @@
             goSlide((current + 1) % slides.length);
         }
         timer = setInterval(nextSlide, 5000);
+
+        // Hamburger menu
+        const hbBtn = document.getElementById('hamburger');
+        const mMenu = document.getElementById('mobile-menu');
+        const s1 = document.getElementById('hb1');
+        const s2 = document.getElementById('hb2');
+        const s3 = document.getElementById('hb3');
+        let menuOpen = false;
+        hbBtn.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            mMenu.classList.toggle('open', menuOpen);
+            hbBtn.setAttribute('aria-expanded', menuOpen);
+            s1.style.transform = menuOpen ? 'rotate(45deg) translate(5px, 5px)' : '';
+            s2.style.opacity = menuOpen ? '0' : '';
+            s3.style.transform = menuOpen ? 'rotate(-45deg) translate(5px, -5px)' : '';
+        });
+
+        // Tutup menu kalau klik link
+        mMenu.querySelectorAll('a').forEach(a => {
+            a.addEventListener('click', () => {
+                menuOpen = false;
+                mMenu.classList.remove('open');
+                hbBtn.setAttribute('aria-expanded', false);
+                s1.style.transform = '';
+                s2.style.opacity = '';
+                s3.style.transform = '';
+            });
+        });
     </script>
 
     <!-- STATS -->
@@ -996,8 +1118,6 @@
             <a href="#" class="btn-outline">Lihat Semua →</a>
         </div>
         <div class="products-grid">
-
-            <!-- Produk 1 -->
             <div class="product-card">
                 <img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=800&q=75" alt="Susu Segar" class="product-img" loading="lazy">
                 <div class="product-body">
@@ -1007,8 +1127,6 @@
                     <div class="product-price">Rp 8.000 / 250ml</div>
                 </div>
             </div>
-
-            <!-- Produk 2 -->
             <div class="product-card">
                 <img src="https://images.unsplash.com/photo-1559598467-f8b76c8155d0?w=800&q=75" alt="Yogurt" class="product-img" loading="lazy">
                 <div class="product-body">
@@ -1018,8 +1136,6 @@
                     <div class="product-price">Rp 15.000 / 200ml</div>
                 </div>
             </div>
-
-            <!-- Produk 3 -->
             <div class="product-card">
                 <img src="https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=800&q=75" alt="Keju" class="product-img" loading="lazy">
                 <div class="product-body">
@@ -1029,7 +1145,6 @@
                     <div class="product-price">Rp 35.000 / 200gr</div>
                 </div>
             </div>
-
         </div>
     </section>
 
@@ -1056,7 +1171,7 @@
                 <p class="keunggulan-text">Produk kami bebas bahan pengawet, pewarna buatan, dan pemanis sintetis.</p>
             </div>
             <div class="keunggulan-item">
-                <div class="keunggulan-icon"></div>
+                <div class="keunggulan-icon">❄️</div>
                 <div class="keunggulan-title">Pengiriman Dingin</div>
                 <p class="keunggulan-text">Dikemas dengan cold-chain packaging untuk menjaga kesegaran selama pengiriman.</p>
             </div>

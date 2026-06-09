@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\ProductVerificationController;
+use App\Http\Controllers\Admin\UmkmController;
 use App\Http\Controllers\Umkm\MyProductController;
 use App\Http\Controllers\Umkm\OrderController;
 use App\Http\Controllers\Umkm\ReportController;
@@ -66,10 +67,10 @@ Route::middleware(['auth', 'super_admin'])->prefix('admin')->group(function () {
         [ProductVerificationController::class, 'approve']
     )->name('admin.products.approve');
 
-    Route::post(
-        '/products/{product}/reject',
-        [ProductVerificationController::class, 'reject']
-    )->name('admin.products.reject');
+    Route::get(
+        '/umkms',
+        [UmkmController::class, 'index']
+    )->name('admin.umkms.index');
 });
 
 Route::middleware(['auth'])->group(function () {

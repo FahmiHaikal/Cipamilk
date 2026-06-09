@@ -166,6 +166,27 @@
             text-align: center;
         }
 
+        #imagePreviewContainer {
+            margin-top: 16px;
+            text-align: center;
+        }
+
+        #imagePreview {
+            width: 100%;
+            max-width: 350px;
+            max-height: 250px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 1px solid var(--gray-medium);
+            box-shadow: var(--shadow-sm);
+        }
+
+        #imageName {
+            margin-top: 10px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
         .file-upload-icon {
             font-size: 32px;
             margin-bottom: 8px;
@@ -307,17 +328,54 @@
                 class="form-card-body">
                 @csrf
 
-                <!-- Foto Produk -->
                 <div class="form-group file-upload-wrapper">
-                    <label for="foto">Foto Produk</label>
-                    <input type="file" id="foto" name="foto" class="file-upload-input" accept="image/*">
-                    <label for="foto" class="file-upload-label">
+                    <label for="image">Foto Produk</label>
+
+                    <input
+                        type="file"
+                        id="image"
+                        name="image"
+                        class="file-upload-input"
+                        accept="image/*">
+
+                    <label
+                        for="image"
+                        class="file-upload-label"
+                        id="uploadLabel">
+
                         <div class="file-upload-text">
                             <div class="file-upload-icon">📸</div>
-                            <p class="main">Pilih foto atau drag & drop</p>
-                            <p>PNG, JPG, GIF (Max. 5MB)</p>
+                            <p class="main">
+                                Pilih foto atau drag & drop
+                            </p>
+                            <p>PNG, JPG, WEBP (Max. 2MB)</p>
                         </div>
+
                     </label>
+
+                    <div
+                        id="imagePreviewContainer"
+                        style="display:none;">
+
+                        <img
+                            id="imagePreview"
+                            alt="Preview Produk">
+
+                        <p
+                            id="imageName"
+                            style="
+                margin-top:10px;
+                font-weight:600;
+                color:#374151;">
+                        </p>
+
+                        <label
+                            for="image"
+                            class="btn btn-secondary"
+                            style="margin-top:10px;">
+                            Ganti Foto
+                        </label>
+                    </div>
                 </div>
 
                 <!-- Two Column: Nama & Kategori -->
@@ -391,6 +449,46 @@
             </form>
         </div>
     </div>
+
+    <script>
+        const imageInput =
+            document.getElementById('image');
+
+        imageInput.addEventListener(
+            'change',
+            function(e) {
+
+                const file = e.target.files[0];
+
+                if (!file) return;
+
+                const reader =
+                    new FileReader();
+
+                reader.onload =
+                    function(event) {
+
+                        document.getElementById(
+                            'imagePreview'
+                        ).src = event.target.result;
+
+                        document.getElementById(
+                            'imageName'
+                        ).textContent = file.name;
+
+                        document.getElementById(
+                            'uploadLabel'
+                        ).style.display = 'none';
+
+                        document.getElementById(
+                            'imagePreviewContainer'
+                        ).style.display = 'block';
+                    };
+
+                reader.readAsDataURL(file);
+            }
+        );
+    </script>
 </body>
 
 </html>
