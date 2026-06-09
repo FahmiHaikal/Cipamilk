@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProductController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ProductVerificationController;
 use App\Http\Controllers\Admin\UmkmController;
 use App\Http\Controllers\Umkm\MyProductController;
@@ -9,8 +11,10 @@ use App\Http\Controllers\Umkm\OrderController;
 use App\Http\Controllers\Umkm\ReportController;
 use App\Http\Controllers\Umkm\SettingController;
 use App\Models\Product;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/p/{product}', [ProductController::class, 'show'])->name('product.detail');
 
 Route::get('/', function () {
     return view('welcome');
@@ -168,3 +172,6 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
+
+

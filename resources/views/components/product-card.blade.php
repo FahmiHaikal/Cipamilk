@@ -1,61 +1,60 @@
-@php
-    $stok = $product->stok ?? 0;
-    $statusLabel = match(true) {
-        $stok === 0  => 'Habis',
-        $stok <= 10  => 'Stok Terbatas',
-        default      => 'Tersedia',
-    };
-    $statusClass = match(true) {
-        $stok === 0  => 'bg-red-950 text-red-400',
-        $stok <= 10  => 'bg-amber-950 text-amber-400',
-        default      => 'bg-green-950 text-green-400',
-    };
-@endphp
+<article class="brutal-container bg-surface-white flex flex-col md:flex-row overflow-hidden h-full">
 
-<div class="rounded-xl overflow-hidden flex flex-col h-full transition-all duration-150 cursor-pointer"
-     style="background: #2a2720; box-shadow: 4px 4px 0px #000; transform: translate(0, 0);"
-     onmouseenter="this.style.boxShadow='0px 0px 0px #000'; this.style.transform='translate(4px, 4px)'"
-     onmouseleave="this.style.boxShadow='4px 4px 0px #000'; this.style.transform='translate(0, 0)'">
+    <div class="flex-1 flex flex-col">
+        <div class="px-5 py-4 border-b-[3px] border-border-primary {{ $bgColor }}">
+            <h3 class="text-h2 font-h2 text-xl lg:text-2xl uppercase tracking-normal leading-tight text-black">
+                <a href="{{ route('product.detail', $product) }}" class="hover:text-primary transition-colors">
+                    {{ $product->nama_produk }}
+                </a>
+            </h3>
+        </div>
 
-    {{-- Foto --}}
-    <div class="w-full overflow-hidden" style="aspect-ratio: 4/3;">
-    @if($product->image)
-        <img
-            src="{{ asset('storage/' . $product->image) }}"
-            alt="{{ $product->nama_produk }}"
-            class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-        >
-    @else
-        <img
-            src="{{ asset('assets/images/products/default-product.png') }}"
-            alt="{{ $product->nama_produk }}"
-            class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-        >
-    @endif
-</div>
+        <div class="px-5 py-6 flex-grow bg-white flex flex-col justify-center space-y-4">
+            <div class="flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-start">
+                <span class="text-label-bold font-label-bold text-xs uppercase text-gray-700">
+                    {{ $product->umkm->nama_umkm ?? 'Cipageran' }}
+                </span>
 
-    {{-- Body --}}
-    <div class="px-4 pt-4 pb-0 flex flex-col flex-grow">
-        <span class="inline-block text-[10px] font-medium uppercase tracking-wide px-2 py-1 rounded mb-2 w-fit {{ $bgColor }} text-black">
-            {{ $product->kategori ?? 'Produk' }}
-        </span>
-        <h3 class="text-base font-medium leading-snug mb-1" style="color: #f0ece4;">
-            {{ $product->nama_produk }}
-        </h3>
-        <p class="text-[12px] leading-relaxed flex-grow" style="color: #9a948a;">
-            {{ Str::limit($product->deskripsi, 90) }}
-        </p>
+                <span class="text-h2 font-h2 text-xl leading-none">
+                    Rp {{ number_format($product->harga, 0, ',', '.') }}
+                </span>
+            </div>
+
+            <p class="text-body-md font-body-md text-sm leading-relaxed text-gray-700">
+                {{ Str::limit($product->deskripsi, 110) }}
+            </p>
+        </div>
+
+        <a href="{{ route('product.detail', $product) }}"
+           class="bg-accent-purple px-5 py-4 text-label-bold font-label-bold uppercase flex justify-between items-center border-t-[3px] border-border-primary w-full text-black hover:bg-accent-pink transition-colors cursor-pointer group">
+            <span class="text-sm">Lihat Detail</span>
+
+            <span class="material-symbols-outlined font-bold group-hover:translate-x-1 transition-transform">
+                arrow_forward
+            </span>
+        </a>
     </div>
 
-    {{-- Footer: stok --}}
-    <div class="flex justify-between items-center px-4 py-3 mt-3" style="border-top: 0.5px solid rgba(255,255,255,0.08);">
-        <span class="text-sm" style="color: #c8c2ba;">
-            <span class="text-lg font-medium" style="color: #f0ece4;">{{ $stok }}</span>
-            pcs tersisa
-        </span>
-        <span class="text-[11px] font-medium px-3 py-1 rounded-full {{ $statusClass }}">
-            {{ $statusLabel }}
-        </span>
+    <div class="w-full md:w-[45%] {{ $bgColor }} p-4 flex items-center justify-center min-h-[220px]">
+        <a href="{{ route('product.detail', $product) }}"
+           class="w-full h-full flex items-center justify-center hover:scale-105 transition-transform duration-300"
+           aria-label="Lihat detail {{ $product->nama_produk }}">
+
+            @if($product->image)
+                <img
+                    src="{{ asset('storage/' . $product->image) }}"
+                    alt="{{ $product->nama_produk }}"
+                    class="w-[82%] md:w-[92%] max-w-[250px] h-auto object-contain drop-shadow-[0_12px_12px_rgba(0,0,0,0.12)]"
+                >
+            @else
+                <img
+                    src="{{ asset('assets/images/products/default-product.png') }}"
+                    alt="{{ $product->nama_produk }}"
+                    class="w-[82%] md:w-[92%] max-w-[250px] h-auto object-contain drop-shadow-[0_12px_12px_rgba(0,0,0,0.12)]"
+                >
+            @endif
+
+        </a>
     </div>
 
-</div>
+</article>
