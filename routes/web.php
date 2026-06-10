@@ -13,23 +13,30 @@ use App\Http\Controllers\Umkm\SettingController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/p/{product}', [ProductController::class, 'show'])->name('product.detail');
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index'])
+    ->name('home');
 
 Route::get('/produk', [HomeController::class, 'index'])
     ->name('landing');
 
-Route::get('/admin', function () {
-    return 'Halo Super Admin';
-})->middleware(['auth', 'super_admin']);
+Route::get('/p/{product}', [ProductController::class, 'show'])
+    ->name('product.detail');
+
+/*
+|--------------------------------------------------------------------------
+| Dashboard
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/dashboard', function () {
 
-    if (Auth::check() && Auth::user()->role === 'super_admin') {
+    if (Auth::user()->role === 'super_admin') {
         return view('dashboard.admin');
     }
 
@@ -39,13 +46,46 @@ Route::get('/dashboard', function () {
     )->get();
 
     return view('dashboard.umkm', [
-        'totalProducts' => $products->count(),
-        'totalStock' => $products->sum('stock'),
+        'totalProducts'  => $products->count(),
+        'totalStock'     => $products->sum('stock'),
         'totalDiscounts' => $products
             ->whereNotNull('discount_price')
             ->count(),
     ]);
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified'])
+    ->name('dashboard');
+
+/*
+|--------------------------------------------------------------------------
+| Admin Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth', 'super_admin'])
+    ->prefix('admin')
+    ->group(function () {
+
+        Route::get(
+            '/products/pending',
+            [ProductVerificationController::class, 'index']
+        )->name('admin.products.pending');
+
+        Route::post(
+            '/products/{product}/approve',
+            [ProductVerificationController::class, 'approve']
+        )->name('admin.products.approve');
+
+        Route::get(
+            '/umkms',
+            [UmkmController::class, 'index']
+        )->name('admin.umkms.index');
+    });
+
+/*
+|--------------------------------------------------------------------------
+| Profile Routes
+|--------------------------------------------------------------------------
+*/
 
 Route::middleware('auth')->group(function () {
 
@@ -59,68 +99,60 @@ Route::middleware('auth')->group(function () {
         ->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'super_admin'])->prefix('admin')->group(function () {
+/*
+|--------------------------------------------------------------------------
+| UMKM Product Routes
+|--------------------------------------------------------------------------
+*/
 
-    Route::get(
-        '/products/pending',
-        [ProductVerificationController::class, 'index']
-    )->name('admin.products.pending');
-
-    Route::post(
-        '/products/{product}/approve',
-        [ProductVerificationController::class, 'approve']
-    )->name('admin.products.approve');
-
-    Route::get(
-        '/umkms',
-        [UmkmController::class, 'index']
-    )->name('admin.umkms.index');
-});
-
-Route::middleware(['auth'])->group(function () {
+Route::middleware('auth')->group(function () {
 
     Route::get(
         '/my-products',
         [MyProductController::class, 'index']
     )->name('my-products');
+
+    Route::get(
+        '/my-products/create',
+        [MyProductController::class, 'create']
+    );
+
+    Route::post(
+        '/my-products',
+        [MyProductController::class, 'store']
+    )->name('my-products.store');
+
+    Route::get(
+        '/my-products/{product}/edit',
+        [MyProductController::class, 'edit']
+    );
+
+    Route::put(
+        '/my-products/{product}',
+        [MyProductController::class, 'update']
+    );
+
+    Route::delete(
+        '/my-products/{product}',
+        [MyProductController::class, 'destroy']
+    );
+
+    Route::patch(
+        '/my-products/{product}/stock',
+        [MyProductController::class, 'updateStock']
+    )->name('my-products.stock');
+
+    Route::patch(
+        '/my-products/{product}/discount',
+        [MyProductController::class, 'updateDiscount']
+    )->name('my-products.discount');
 });
 
-Route::get(
-    '/my-products/create',
-    [MyProductController::class, 'create']
-)->middleware('auth');
-
-Route::get(
-    '/my-products/{product}/edit',
-    [MyProductController::class, 'edit']
-)->middleware('auth');
-
-Route::put(
-    '/my-products/{product}',
-    [MyProductController::class, 'update']
-)->middleware('auth');
-
-Route::delete(
-    '/my-products/{product}',
-    [MyProductController::class, 'destroy']
-)->middleware('auth');
-
-Route::post(
-    '/my-products',
-    [MyProductController::class, 'store']
-)->middleware('auth')
-    ->name('my-products.store');
-
-Route::patch('/my-products/{product}/stock',
-    [MyProductController::class, 'updateStock'])
-    ->name('my-products.stock');
-
-Route::patch(
-    '/my-products/{product}/discount',
-    [MyProductController::class, 'updateDiscount']
-)->middleware('auth')
-    ->name('my-products.discount');
-
+/*
+|--------------------------------------------------------------------------
+| Orders
+|--------------------------------------------------------------------------
+*/
 
 Route::middleware('auth')->group(function () {
 
@@ -145,13 +177,25 @@ Route::middleware('auth')->group(function () {
     );
 });
 
+/*
+|--------------------------------------------------------------------------
+| Reports
+|--------------------------------------------------------------------------
+*/
 
-Route::get(
-    '/reports',
-    [ReportController::class, 'index']
-)->middleware('auth')
-    ->name('reports');
+Route::middleware('auth')->group(function () {
 
+    Route::get(
+        '/reports',
+        [ReportController::class, 'index']
+    )->name('reports');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Settings
+|--------------------------------------------------------------------------
+*/
 
 Route::middleware('auth')->group(function () {
 
@@ -172,6 +216,3 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
-
-
-
