@@ -19,4 +19,11 @@ class ProductController extends Controller
 
         return view('products.show', compact('product', 'relatedProducts'));
     }
+
+    public function index()
+    {
+        $products = Product::with('umkm')->latest()->get();
+
+        return view('products.index', compact('products'));
+    }
 }
