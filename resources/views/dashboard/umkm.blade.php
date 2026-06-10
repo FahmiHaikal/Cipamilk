@@ -27,41 +27,50 @@
         --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     }
 
+    html {
+        font-size: clamp(14px, 2vw, 16px);
+    }
+
     body {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
         color: var(--dark);
+        line-height: 1.6;
     }
 
     .dashboard-container {
         max-width: 1400px;
         margin: 0 auto;
-        padding: 40px 24px;
+        padding: clamp(16px, 6vw, 40px) clamp(12px, 4vw, 24px);
     }
 
     /* Navbar Section */
     .dashboard-navbar {
-        margin-bottom: 32px;
+        margin-bottom: clamp(20px, 8vw, 32px);
         display: flex;
-        gap: 12px;
+        gap: clamp(8px, 2vw, 12px);
         flex-wrap: wrap;
+        align-items: center;
     }
 
     .navbar-btn {
         display: inline-flex;
         align-items: center;
-        gap: 6px;
+        justify-content: center;
+        gap: clamp(4px, 1vw, 6px);
         background: var(--white);
         color: var(--dark);
-        padding: 10px 18px;
-        border-radius: 8px;
+        padding: clamp(8px, 2vw, 10px) clamp(14px, 4vw, 18px);
+        border-radius: clamp(6px, 1.5vw, 8px);
         text-decoration: none;
         font-weight: 500;
-        font-size: 14px;
+        font-size: clamp(12px, 2vw, 14px);
         border: 1px solid var(--gray-medium);
         cursor: pointer;
         transition: all 0.3s ease;
         box-shadow: var(--shadow-sm);
+        min-height: 44px;
+        white-space: nowrap;
     }
 
     .navbar-btn:hover {
@@ -70,41 +79,59 @@
         transform: translateY(-1px);
     }
 
+    .navbar-btn:active {
+        transform: translateY(0);
+    }
+
+    .navbar-btn.active {
+        background: var(--primary);
+        color: var(--white);
+        border-color: var(--primary);
+    }
+
     /* Header Section */
     .dashboard-header {
-        margin-bottom: 32px;
+        margin-bottom: clamp(20px, 8vw, 32px);
+        animation: fadeInUp 0.6s ease-out forwards;
+        animation-delay: 0.1s;
     }
 
     .dashboard-header h1 {
-        font-size: 32px;
+        font-size: clamp(24px, 8vw, 36px);
         font-weight: 700;
         color: var(--dark);
-        margin-bottom: 8px;
+        margin-bottom: clamp(6px, 2vw, 8px);
         letter-spacing: -0.5px;
+        line-height: 1.2;
     }
 
     .dashboard-header p {
         color: var(--gray-text);
-        font-size: 16px;
+        font-size: clamp(13px, 3vw, 16px);
         font-weight: 400;
     }
 
     /* Stats Grid */
     .stats-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 20px;
-        margin-bottom: 32px;
+        grid-template-columns: repeat(auto-fit, minmax(clamp(250px, 100%, 350px), 1fr));
+        gap: clamp(12px, 4vw, 20px);
+        margin-bottom: clamp(20px, 8vw, 32px);
     }
 
     .stat-card {
         background: var(--white);
-        border-radius: 16px;
-        padding: 24px;
+        border-radius: clamp(12px, 3vw, 16px);
+        padding: clamp(16px, 5vw, 24px);
         box-shadow: var(--shadow-md);
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
         overflow: hidden;
+        min-height: clamp(140px, 30vw, 200px);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        animation: fadeInUp 0.6s ease-out forwards;
     }
 
     .stat-card::before {
@@ -122,6 +149,18 @@
         box-shadow: var(--shadow-lg);
     }
 
+    .stat-card:nth-child(1) {
+        animation-delay: 0.2s;
+    }
+
+    .stat-card:nth-child(2) {
+        animation-delay: 0.3s;
+    }
+
+    .stat-card:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+
     .stat-card.stat-products::before {
         background: linear-gradient(90deg, #10b981, #059669);
     }
@@ -135,49 +174,55 @@
     }
 
     .stat-label {
-        font-size: 14px;
+        font-size: clamp(11px, 2vw, 14px);
         font-weight: 600;
         color: var(--gray-text);
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        margin-bottom: 12px;
+        margin-bottom: clamp(8px, 2vw, 12px);
     }
 
     .stat-value {
-        font-size: 42px;
+        font-size: clamp(28px, 8vw, 42px);
         font-weight: 800;
         color: var(--dark);
         line-height: 1;
+        margin-bottom: 8px;
     }
 
     .stat-icon {
         position: absolute;
         bottom: -8px;
         right: -8px;
-        font-size: 80px;
+        font-size: clamp(60px, 15vw, 80px);
         opacity: 0.08;
     }
 
     /* Action Section */
     .action-section {
-        margin-bottom: 24px;
+        margin-bottom: clamp(16px, 6vw, 24px);
+        animation: fadeInUp 0.6s ease-out forwards;
+        animation-delay: 0.5s;
     }
 
     .btn-add-product {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
+        justify-content: center;
+        gap: clamp(6px, 1.5vw, 8px);
         background: linear-gradient(135deg, var(--primary), var(--primary-dark));
         color: var(--white);
-        padding: 12px 24px;
-        border-radius: 12px;
+        padding: clamp(10px, 2.5vw, 12px) clamp(18px, 4vw, 24px);
+        border-radius: clamp(10px, 2vw, 12px);
         text-decoration: none;
         font-weight: 600;
-        font-size: 14px;
+        font-size: clamp(13px, 2.5vw, 14px);
         border: none;
         cursor: pointer;
         transition: all 0.3s ease;
         box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        min-height: 44px;
+        white-space: nowrap;
     }
 
     .btn-add-product:hover {
@@ -192,28 +237,30 @@
     /* Main Content Card */
     .content-card {
         background: var(--white);
-        border-radius: 16px;
+        border-radius: clamp(12px, 3vw, 16px);
         box-shadow: var(--shadow-md);
         overflow: hidden;
         transition: all 0.3s ease;
+        animation: fadeInUp 0.6s ease-out forwards;
+        animation-delay: 0.6s;
     }
 
     .content-card-header {
-        padding: 24px;
+        padding: clamp(16px, 5vw, 24px);
         background: linear-gradient(135deg, #f9fafb, #f3f4f6);
         border-bottom: 1px solid var(--gray-medium);
     }
 
     .content-card-header h2 {
-        font-size: 22px;
+        font-size: clamp(18px, 5vw, 22px);
         font-weight: 700;
         color: var(--dark);
-        margin-bottom: 8px;
+        margin-bottom: clamp(4px, 1vw, 8px);
     }
 
     .content-card-header p {
         color: var(--gray-text);
-        font-size: 15px;
+        font-size: clamp(13px, 2.5vw, 15px);
         font-weight: 400;
     }
 
@@ -221,12 +268,15 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 24px;
+        gap: clamp(16px, 4vw, 24px);
+        padding: clamp(16px, 5vw, 24px);
         background: var(--white);
         text-decoration: none;
         color: var(--dark);
         transition: all 0.3s ease;
         cursor: pointer;
+        min-height: 70px;
+        flex-wrap: wrap;
     }
 
     .content-card-link:hover {
@@ -237,55 +287,23 @@
         transform: translateX(4px);
     }
 
-    .arrow-icon {
-        font-size: 28px;
-        color: var(--primary);
-        transition: transform 0.3s ease;
+    .content-card-link h3 {
+        font-size: clamp(16px, 3.5vw, 18px);
+        font-weight: 600;
+        color: var(--dark);
+        margin-bottom: clamp(2px, 1vw, 4px);
     }
 
-    /* Responsive Design */
-    @media (max-width: 768px) {
-        .dashboard-container {
-            padding: 20px 16px;
-        }
+    .content-card-link p {
+        color: var(--gray-text);
+        font-size: clamp(13px, 2.5vw, 14px);
+    }
 
-        .dashboard-header h1 {
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
-
-        .stats-grid {
-            grid-template-columns: 1fr;
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .stat-card {
-            padding: 16px;
-        }
-
-        .stat-value {
-            font-size: 32px;
-        }
-
-        .content-card-header,
-        .content-card-link {
-            padding: 16px;
-        }
-
-        .content-card-header h2 {
-            font-size: 16px;
-        }
-
-        .dashboard-navbar {
-            gap: 8px;
-            margin-bottom: 24px;
-        }
-
-        .navbar-btn {
-            padding: 8px 14px;
-            font-size: 12px;
-        }
+    .arrow-icon {
+        font-size: clamp(20px, 6vw, 28px);
+        color: var(--primary);
+        transition: transform 0.3s ease;
+        flex-shrink: 0;
     }
 
     /* Animation on Load */
@@ -300,35 +318,194 @@
         }
     }
 
-    .dashboard-header,
-    .stat-card,
-    .action-section,
-    .content-card {
-        animation: fadeInUp 0.6s ease-out forwards;
+    /* Tablet Breakpoint (768px) */
+    @media (max-width: 768px) {
+        .dashboard-container {
+            padding: clamp(12px, 3vw, 20px) clamp(10px, 3vw, 16px);
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr;
+            gap: clamp(10px, 3vw, 16px);
+        }
+
+        .stat-card {
+            min-height: 120px;
+        }
+
+        .navbar-btn {
+            flex: 1 1 auto;
+            min-width: 120px;
+        }
     }
 
-    .dashboard-header {
-        animation-delay: 0.1s;
+    /* Small Tablet Breakpoint (600px) */
+    @media (max-width: 600px) {
+        .dashboard-header h1 {
+            font-size: clamp(20px, 7vw, 28px);
+        }
+
+        .navbar-btn {
+            flex: 1 1 calc(50% - 4px);
+            min-width: auto;
+            font-size: clamp(11px, 2.5vw, 13px);
+            padding: 8px 10px;
+        }
+
+        .stat-card {
+            min-height: 110px;
+        }
+
+        .stat-value {
+            font-size: clamp(24px, 7vw, 36px);
+        }
+
+        .btn-add-product {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .content-card-link {
+            flex-direction: column;
+            align-items: flex-start;
+            min-height: auto;
+        }
+
+        .arrow-icon {
+            align-self: flex-start;
+        }
     }
 
-    .stat-card:nth-child(1) {
-        animation-delay: 0.2s;
+    /* Mobile Breakpoint (480px) */
+    @media (max-width: 480px) {
+        :root {
+            font-size: 14px;
+        }
+
+        .dashboard-container {
+            padding: clamp(10px, 2.5vw, 16px) clamp(8px, 2vw, 12px);
+        }
+
+        .dashboard-header {
+            margin-bottom: clamp(16px, 5vw, 24px);
+        }
+
+        .dashboard-header h1 {
+            font-size: clamp(18px, 6vw, 24px);
+            margin-bottom: 6px;
+        }
+
+        .dashboard-header p {
+            font-size: clamp(12px, 3vw, 14px);
+        }
+
+        .dashboard-navbar {
+            gap: 6px;
+            margin-bottom: clamp(16px, 4vw, 20px);
+        }
+
+        .navbar-btn {
+            flex: 1 1 calc(50% - 3px);
+            font-size: clamp(10px, 2.5vw, 12px);
+            padding: 8px 8px;
+            gap: 3px;
+        }
+
+        .stats-grid {
+            gap: clamp(8px, 3vw, 12px);
+            margin-bottom: clamp(16px, 5vw, 20px);
+        }
+
+        .stat-card {
+            padding: clamp(14px, 4vw, 16px);
+            min-height: 100px;
+            border-radius: 10px;
+        }
+
+        .stat-label {
+            font-size: clamp(10px, 2vw, 12px);
+            margin-bottom: 6px;
+        }
+
+        .stat-value {
+            font-size: clamp(22px, 6vw, 32px);
+        }
+
+        .stat-icon {
+            font-size: clamp(50px, 12vw, 70px);
+        }
+
+        .action-section {
+            margin-bottom: clamp(14px, 4vw, 20px);
+        }
+
+        .btn-add-product {
+            font-size: clamp(12px, 2vw, 13px);
+            padding: 10px 16px;
+            width: 100%;
+        }
+
+        .content-card {
+            border-radius: 10px;
+        }
+
+        .content-card-header {
+            padding: clamp(14px, 4vw, 16px);
+        }
+
+        .content-card-header h2 {
+            font-size: clamp(16px, 4vw, 18px);
+            margin-bottom: 4px;
+        }
+
+        .content-card-header p {
+            font-size: clamp(12px, 2.5vw, 13px);
+        }
+
+        .content-card-link {
+            padding: clamp(14px, 4vw, 16px);
+            gap: clamp(12px, 3vw, 16px);
+            min-height: auto;
+        }
+
+        .content-card-link h3 {
+            font-size: clamp(14px, 3vw, 16px);
+        }
+
+        .content-card-link p {
+            font-size: clamp(12px, 2.5vw, 13px);
+        }
+
+        .arrow-icon {
+            font-size: clamp(18px, 5vw, 24px);
+        }
     }
 
-    .stat-card:nth-child(2) {
-        animation-delay: 0.3s;
+    /* Extra Small Mobile (360px) */
+    @media (max-width: 360px) {
+        .navbar-btn {
+            font-size: 10px;
+            padding: 6px 6px;
+        }
+
+        .stat-value {
+            font-size: clamp(20px, 6vw, 28px);
+        }
     }
 
-    .stat-card:nth-child(3) {
-        animation-delay: 0.4s;
-    }
+    /* Large Desktop (1200px+) */
+    @media (min-width: 1200px) {
+        .dashboard-navbar {
+            gap: 16px;
+        }
 
-    .action-section {
-        animation-delay: 0.5s;
-    }
+        .navbar-btn {
+            padding: 10px 20px;
+        }
 
-    .content-card {
-        animation-delay: 0.6s;
+        .stats-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
     }
     </style>
 </head>
@@ -352,20 +529,26 @@
     <!-- Stats Grid -->
     <div class="stats-grid">
         <div class="stat-card stat-products">
-            <div class="stat-label">Total Produk</div>
-            <div class="stat-value">{{ $totalProducts }}</div>
+            <div>
+                <div class="stat-label">Total Produk</div>
+                <div class="stat-value">{{ $totalProducts }}</div>
+            </div>
             <div class="stat-icon">📦</div>
         </div>
 
         <div class="stat-card stat-stock">
-            <div class="stat-label">Total Stok</div>
-            <div class="stat-value">{{ $totalStock }}</div>
+            <div>
+                <div class="stat-label">Total Stok</div>
+                <div class="stat-value">{{ $totalStock }}</div>
+            </div>
             <div class="stat-icon">📊</div>
         </div>
 
         <div class="stat-card stat-discount">
-            <div class="stat-label">Produk Diskon</div>
-            <div class="stat-value">{{ $totalDiscounts }}</div>
+            <div>
+                <div class="stat-label">Produk Diskon</div>
+                <div class="stat-value">{{ $totalDiscounts }}</div>
+            </div>
             <div class="stat-icon">🏷️</div>
         </div>
     </div>
@@ -386,12 +569,8 @@
         </div>
         <a href="{{ route('my-products') }}" class="content-card-link">
             <div>
-                <h3 style="font-size: 18px; font-weight: 600; color: var(--dark); margin-bottom: 4px;">
-                    Lihat Semua Produk
-                </h3>
-                <p style="color: var(--gray-text); font-size: 14px;">
-                    Kelola harga, stok, dan promosi produk Anda
-                </p>
+                <h3>Lihat Semua Produk</h3>
+                <p>Kelola harga, stok, dan promosi produk Anda</p>
             </div>
             <div class="arrow-icon">→</div>
         </a>

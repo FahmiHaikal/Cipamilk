@@ -336,7 +336,8 @@
                         id="image"
                         name="image"
                         class="file-upload-input"
-                        accept="image/*">
+                        accept="image/*"
+                        required>
 
                     <label
                         for="image"
@@ -352,6 +353,10 @@
                         </div>
 
                     </label>
+
+                    <small style="color:#ef4444;">
+                        Wajib diisi
+                    </small>
 
                     <div
                         id="imagePreviewContainer"
@@ -388,13 +393,16 @@
                     <div class="form-group">
                         <label for="kategori">Kategori *</label>
                         <select id="kategori" name="kategori" required>
-                            <option value="">-- Pilih Kategori --</option>
-                            <option value="Susu">Susu & Dairy</option>
-                            <option value="Kue">Kue & Pastry</option>
+                            <option value="" disabled selected>Pilih kategori</option>
+                            <option value="Susu">Susu</option>
+                            <option value="Es">Es</option>
+                            <option value="Kue">Kue</option>
+                            <option value="Yogurt">Yogurt</option>
                             <option value="Minuman">Minuman</option>
                             <option value="Makanan Ringan">Makanan Ringan</option>
-                            <option value="Kerajinan">Kerajinan</option>
-                            <option value="Fashion">Fashion</option>
+                            <option value="Keju">Keju</option>
+                            <option value="Mentega">Mentega</option>
+                            <option value="Produk Kecantikan">Produk Kecantikan</option>
                             <option value="Lainnya">Lainnya</option>
                         </select>
                     </div>
@@ -413,15 +421,19 @@
                             required>
                     </div>
                     <div class="form-group">
-                        <label for="label">Label/Tag</label>
-                        <input type="text" id="label" name="label" placeholder="Contoh: Organik, Halal, Promo, Terbaru">
+                        <label for="label_gizi">Label/Tag</label>
+                        <input type="text" id="label_gizi"
+                            name="label_gizi"
+                            placeholder="Contoh: Organik, Halal, Promo, Terbaru"
+                            required>
                     </div>
                 </div>
 
                 <!-- Deskripsi -->
                 <div class="form-group">
                     <label for="deskripsi">Deskripsi Produk</label>
-                    <textarea id="deskripsi" name="deskripsi" placeholder="Jelaskan detail produk, bahan, manfaat, dan cara penggunaan..."></textarea>
+                    <textarea id="deskripsi" name="deskripsi"
+                        placeholder="Jelaskan detail produk, bahan, manfaat, dan cara penggunaan..." required></textarea>
                 </div>
 
                 <!-- Two Column: Stock & Diskon -->

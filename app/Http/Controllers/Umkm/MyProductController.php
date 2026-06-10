@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Umkm;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,13 +27,14 @@ class MyProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_produk' => 'required',
-            'harga' => 'required|integer|min:0',
-            'kategori' => 'required',
-            'deskripsi' => 'required',
-            'stock' => 'required|integer|min:0',
+            'nama_produk' => 'required|string|max:255',
+            'harga' => 'required|integer|min:0|max:999999999',
+            'kategori' => 'required|in:Susu,Es,Kue,Yogurt,Minuman,Makanan Ringan,Keju,Mentega,Produk Kecantikan,Lainnya',
+            'deskripsi' => 'required|string|max:2000',
+            'label_gizi' => 'required|string|max:255',
+            'stock' => 'required|integer|min:0|max:99999',
             'discount_price' => 'nullable|integer|min:0|max:100',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
         $imagePath = null;
@@ -46,9 +48,11 @@ class MyProductController extends Controller
         Product::create([
             'umkm_id' => Auth::user()->umkm_id,
             'nama_produk' => $request->nama_produk,
+            'slug' => Str::slug($request->nama_produk),
             'harga' => $request->harga,
             'kategori' => $request->kategori,
             'deskripsi' => $request->deskripsi,
+            'label_gizi' => $request->label_gizi,
             'stock' => $request->stock,
             'discount_price' => $request->discount_price,
             'image' => $imagePath,
@@ -60,6 +64,7 @@ class MyProductController extends Controller
 
     public function edit(Product $product)
     {
+
         if ($product->umkm_id !== Auth::user()->umkm_id) {
             abort(403);
         }
@@ -75,25 +80,31 @@ class MyProductController extends Controller
 
         $request->validate([
             'nama_produk' => 'required|string|max:255',
-            'harga' => 'required|integer|min:0',
-            'kategori' => 'required|string|max:255',
-            'deskripsi' => 'required',
+            'harga' => 'required|integer|min:0|max:999999999',
+            'kategori' => 'required|in:Susu,Es,Kue,Yogurt,Minuman,Makanan Ringan,Keju,Mentega,Produk Kecantikan,Lainnya',
+            'deskripsi' => 'required|string|max:2000',
             'masa_simpan' => 'nullable|string|max:255',
-            'label_gizi' => 'nullable|string|max:255',
-            'stock' => 'required|integer|min:0',
-            'discount_price' => 'nullable|integer|min:0|max:100',
+            'label_gizi' => 'required|string|max:255',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
+
+        $imagePath = $product->image;
+
+        if ($request->hasFile('foto')) {
+            $imagePath = $request
+                ->file('foto')
+                ->store('products', 'public');
+        }
 
         $product->update([
             'nama_produk' => $request->nama_produk,
+            'slug' => Str::slug($request->nama_produk),
             'harga' => $request->harga,
             'kategori' => $request->kategori,
             'deskripsi' => $request->deskripsi,
             'masa_simpan' => $request->masa_simpan,
             'label_gizi' => $request->label_gizi,
-            'stock' => $request->stock,
-            'discount_price' => $request->discount_price,
-            'status' => 'pending',
+            'image' => $imagePath,
         ]);
 
         return redirect()->route('my-products');
@@ -106,7 +117,7 @@ class MyProductController extends Controller
         }
 
         $request->validate([
-            'stock' => 'required|integer|min:0'
+            'stock' => 'required|integer|min:0|max:99999',
         ]);
 
         $product->update([
@@ -123,7 +134,7 @@ class MyProductController extends Controller
         }
 
         $request->validate([
-            'discount_price' => 'nullable|integer|min:0'
+            'discount_price' => 'nullable|integer|min:0|max:100',
         ]);
 
         $product->update([

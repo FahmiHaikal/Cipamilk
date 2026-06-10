@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Produk - UMKM</title>
+    <title>Edit Produk - UMKM</title>
     <style>
         * {
             margin: 0;
@@ -302,7 +302,7 @@
 
             <form
                 method="POST"
-                action="/my-products/{{ $product->id }}"
+                action="{{ url('/my-products/' . $product->slug) }}"
                 enctype="multipart/form-data"
                 class="form-card-body">
                 @csrf
@@ -311,13 +311,46 @@
                 <!-- Foto Produk -->
                 <div class="form-group file-upload-wrapper">
                     <label for="foto">Foto Produk</label>
-                    <input type="file" id="foto" name="foto" class="file-upload-input" accept="image/*">
+
+                    <input
+                        type="file"
+                        id="foto"
+                        name="foto"
+                        class="file-upload-input"
+                        accept="image/*">
+
                     <label for="foto" class="file-upload-label">
+
+                        @if($product->image)
+                        <div class="file-upload-text">
+
+                            <img
+                                id="preview-image"
+                                src="{{ asset('storage/' . $product->image) }}"
+                                alt="{{ $product->nama_produk }}"
+                                style="max-width: 350px;
+                                max-height: 220px;
+                                object-fit: contain;
+                                display:block;
+                                margin:0 auto 12px;">
+                            <p class="main">
+                                {{ basename($product->image) }}
+                            </p>
+
+                            <p>Klik untuk mengganti foto</p>
+
+                        </div>
+
+                        @else
+
                         <div class="file-upload-text">
                             <div class="file-upload-icon">📸</div>
                             <p class="main">Pilih foto atau drag & drop</p>
                             <p>PNG, JPG, GIF (Max. 5MB)</p>
                         </div>
+
+                        @endif
+
                     </label>
                 </div>
 
@@ -335,23 +368,45 @@
 
                     <div class="form-group">
                         <label for="kategori">Kategori *</label>
+
                         <select id="kategori" name="kategori" required>
                             <option value="">-- Pilih Kategori --</option>
                             <option value="Susu" {{ $product->kategori == 'Susu' ? 'selected' : '' }}>
-                                Susu & Dairy
+                                Susu
                             </option>
+
+                            <option value="Es" {{ $product->kategori == 'Es' ? 'selected' : '' }}>
+                                Es
+                            </option>
+
+                            <option value="Kue" {{ $product->kategori == 'Kue' ? 'selected' : '' }}>
+                                Kue
+                            </option>
+
+                            <option value="Yogurt" {{ $product->kategori == 'Yogurt' ? 'selected' : '' }}>
+                                Yogurt
+                            </option>
+
                             <option value="Minuman" {{ $product->kategori == 'Minuman' ? 'selected' : '' }}>
                                 Minuman
                             </option>
+
                             <option value="Makanan Ringan" {{ $product->kategori == 'Makanan Ringan' ? 'selected' : '' }}>
                                 Makanan Ringan
                             </option>
-                            <option value="Kerajinan" {{ $product->kategori == 'Kerajinan' ? 'selected' : '' }}>
-                                Kerajinan
+
+                            <option value="Keju" {{ $product->kategori == 'Keju' ? 'selected' : '' }}>
+                                Keju
                             </option>
-                            <option value="Fashion" {{ $product->kategori == 'Fashion' ? 'selected' : '' }}>
-                                Fashion
+
+                            <option value="Mentega" {{ $product->kategori == 'Mentega' ? 'selected' : '' }}>
+                                Mentega
                             </option>
+
+                            <option value="Produk Kecantikan" {{ $product->kategori == 'Produk Kecantikan' ? 'selected' : '' }}>
+                                Produk Kecantikan
+                            </option>
+
                             <option value="Lainnya" {{ $product->kategori == 'Lainnya' ? 'selected' : '' }}>
                                 Lainnya
                             </option>
@@ -367,7 +422,7 @@
                             type="number"
                             id="harga"
                             name="harga"
-                            value="{{ old('harga', $product->harga) }}">
+                            value="{{ old('harga', $product->harga) }}" required>
                     </div>
                     <div class="form-group">
                         <label for="label">Label/Tag</label>
@@ -375,7 +430,7 @@
                             type="text"
                             id="label_gizi"
                             name="label_gizi"
-                            value="{{ old('label_gizi', $product->label_gizi) }}">
+                            value="{{ old('label_gizi', $product->label_gizi) }}" required>
                     </div>
                 </div>
 
@@ -384,7 +439,7 @@
                     <label for="deskripsi">Deskripsi Produk</label>
                     <textarea
                         id="deskripsi"
-                        name="deskripsi">{{ old('deskripsi', $product->deskripsi) }}</textarea>
+                        name="deskripsi" required>{{ old('deskripsi', $product->deskripsi) }}</textarea>
                 </div>
 
                 <!-- Form Actions -->
@@ -399,6 +454,20 @@
             </form>
         </div>
     </div>
+
+    <script>
+        const fotoInput = document.getElementById('foto');
+        const preview = document.getElementById('preview-image');
+
+        fotoInput.addEventListener('change', function() {
+
+            const file = this.files[0];
+
+            if (!file) return;
+
+            preview.src = URL.createObjectURL(file);
+        });
+    </script>
 </body>
 
 </html>
