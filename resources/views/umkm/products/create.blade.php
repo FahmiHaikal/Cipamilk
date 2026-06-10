@@ -449,6 +449,44 @@
                     </div>
                 </div>
 
+                <!-- Two Column: Rating & Terjual -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="rating">Rating</label>
+                        <input
+                            type="number"
+                            id="rating"
+                            name="rating"
+                            placeholder="Contoh: 4.8"
+                            min="0"
+                            max="5"
+                            step="0.1"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="terjual">Terjual</label>
+                        <input
+                            type="number"
+                            id="terjual"
+                            name="terjual"
+                            placeholder="Contoh: 150"
+                            min="0"
+                            required>
+                    </div>
+                </div>
+
+                <!-- Masa Simpan -->
+                <div class="form-group">
+                    <label for="masa_simpan">Masa Simpan</label>
+                    <input
+                        type="text"
+                        id="masa_simpan"
+                        name="masa_simpan"
+                        placeholder="Contoh: 7 Hari (Kulkas)"
+                        required>
+                </div>
+
                 <!-- Form Actions -->
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">

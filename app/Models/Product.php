@@ -18,6 +18,8 @@ class Product extends Model
         'image',
         'stock',
         'discount_price',
+        'rating',
+        'terjual',
         'status',
     ];
 

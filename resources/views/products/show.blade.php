@@ -57,10 +57,10 @@
 
                     <!-- Harga -->
                     <div class="mb-6 pb-6 border-b border-gray-100">
-                        @if(isset($product->diskon) && $product->diskon > 0)
-                            @php $hargaDiskon = $product->harga - ($product->harga * ($product->diskon / 100)); @endphp
+                        @if(isset($product->discount_price) && $product->discount_price > 0)
+                            @php $hargaDiskon = $product->harga - $product->discount_price; @endphp
                             <div class="flex items-center gap-2 mb-1">
-                                <span class="text-xs bg-red-100 text-red-600 font-bold px-1.5 py-0.5 rounded">{{ $product->diskon }}%</span>
+                                <span class="text-xs bg-red-100 text-red-600 font-bold px-1.5 py-0.5 rounded">{{ $product->discount_percentage }}%</span>
                                 <span class="text-sm text-gray-400 line-through">Rp {{ number_format($product->harga, 0, ',', '.') }}</span>
                             </div>
                             <p class="text-3xl font-extrabold text-orange-500">Rp {{ number_format($hargaDiskon, 0, ',', '.') }}</p>

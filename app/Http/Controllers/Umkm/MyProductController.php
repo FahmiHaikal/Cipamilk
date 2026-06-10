@@ -35,6 +35,9 @@ class MyProductController extends Controller
             'stock' => 'required|integer|min:0|max:99999',
             'discount_price' => 'nullable|integer|min:0|max:100',
             'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'masa_simpan' => 'required|string|max:255',
+            'rating' => 'required|numeric|min:0|max:5',
+            'terjual' => 'required|integer|min:0|max:99999',
         ]);
 
         $imagePath = null;
@@ -56,6 +59,9 @@ class MyProductController extends Controller
             'stock' => $request->stock,
             'discount_price' => $request->discount_price,
             'image' => $imagePath,
+            'rating' => $request->rating,
+            'terjual' => $request->terjual,
+            'masa_simpan' => $request->masa_simpan,
             'status' => 'pending',
         ]);
 
@@ -83,9 +89,11 @@ class MyProductController extends Controller
             'harga' => 'required|integer|min:0|max:999999999',
             'kategori' => 'required|in:Susu,Es,Kue,Yogurt,Minuman,Makanan Ringan,Keju,Mentega,Produk Kecantikan,Lainnya',
             'deskripsi' => 'required|string|max:2000',
-            'masa_simpan' => 'nullable|string|max:255',
+            'masa_simpan' => 'required|string|max:255',
             'label_gizi' => 'required|string|max:255',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'rating' => 'required|numeric|min:0|max:5',
+            'terjual' => 'required|integer|min:0|max:99999',
         ]);
 
         $imagePath = $product->image;
@@ -105,6 +113,8 @@ class MyProductController extends Controller
             'masa_simpan' => $request->masa_simpan,
             'label_gizi' => $request->label_gizi,
             'image' => $imagePath,
+            'rating' => $request->rating,
+            'terjual' => $request->terjual,
         ]);
 
         return redirect()->route('my-products');

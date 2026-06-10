@@ -442,6 +442,41 @@
                         name="deskripsi" required>{{ old('deskripsi', $product->deskripsi) }}</textarea>
                 </div>
 
+                <!--rating & terjual -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="rating">Rating</label>
+                        <input
+                            type="number"
+                            step="0.1"
+                            min="0"
+                            max="5"
+                            id="rating"
+                            name="rating"
+                            value="{{ old('rating', $product->rating) }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="terjual">Terjual</label>
+                        <input
+                            type="number"
+                            min="0"
+                            id="terjual"
+                            name="terjual"
+                            value="{{ old('terjual', $product->terjual) }}">
+                    </div>
+                </div>
+
+                <!-- Masa Simpan -->
+                <div class="form-group">
+                    <label for="masa_simpan">Masa Simpan</label>
+                    <input
+                        type="text"
+                        id="masa_simpan"
+                        name="masa_simpan"
+                        value="{{ old('masa_simpan', $product->masa_simpan) }}">
+                </div>
+
                 <!-- Form Actions -->
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">
