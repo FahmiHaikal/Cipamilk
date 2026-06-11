@@ -22,7 +22,7 @@
 <div class="umkm-card umkm-fade umkm-fade--3">
     <div class="umkm-card__head">📦 Informasi Produk</div>
 
-    <form method="POST" action="{{ route('my-products.store') }}"
+    <form method="POST" action="{{ route('products.store') }}"
           enctype="multipart/form-data" class="umkm-card__body">
         @csrf
 

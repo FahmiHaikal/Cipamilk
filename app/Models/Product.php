@@ -19,7 +19,10 @@ class Product extends Model
         'diskon',
         'rating',
         'terjual',
+        'status',
+        'stock'
     ];
+
 
     public function getRouteKeyName(): string
     {

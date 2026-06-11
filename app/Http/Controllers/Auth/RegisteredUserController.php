@@ -28,29 +28,37 @@ class RegisteredUserController extends Controller
      *
      * @throws ValidationException
      */
-public function store(Request $request): RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
-        // 1. Validasi Input (Hapus aturan 'lowercase' di sini)
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class], // 'lowercase' dihilangkan
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', \Illuminate\Validation\Rules\Password::defaults()],
             'role' => ['required', 'string', 'in:konsumen,umkm'], 
         ]);
 
-        // 2. Simpan User (Ubah email menjadi huruf kecil secara otomatis di belakang layar)
         $user = User::create([
             'name' => $request->name,
-            'email' => strtolower($request->email), // <-- Ubah otomatis ke huruf kecil di database
+            'email' => strtolower($request->email),
             'password' => \Illuminate\Support\Facades\Hash::make($request->password),
             'role' => $request->role, 
         ]);
+
+        // --- TAMBAHKAN BLOK KODE INI ---
+        // Jika yang mendaftar adalah UMKM, otomatis buatkan profil toko awal
+        if ($user->role === 'umkm') {
+            \App\Models\Umkm::create([
+                'user_id' => $user->id,
+                'nama_umkm' => 'Toko ' . $user->name, // Beri nama toko bawaan
+                'whatsapp' => '-', // Beri nilai default agar tidak error jika kolom ini required di database
+            ]);
+        }
+        // -------------------------------
 
         event(new \Illuminate\Auth\Events\Registered($user));
 
         \Illuminate\Support\Facades\Auth::login($user);
 
-        // 3. LOGIKA REDIRECT BERDASARKAN ROLE
         $role = $user->role;
 
         if ($role === 'admin') {

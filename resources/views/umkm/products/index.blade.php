@@ -24,8 +24,7 @@
     </div>
     <div class="umkm-stat umkm-stat--red">
         <div class="umkm-stat__label">Produk Diskon</div>
-        <div class="umkm-stat__value">{{ $products->where('discount_price', '>', 0)->count() }}</div>
-        <div class="umkm-stat__icon">🏷️</div>
+        <div class="umkm-stat__value">{{ $products->where('diskon', '>', 0)->count() }}</div>        <div class="umkm-stat__icon">🏷️</div>
     </div>
 </div>
 
@@ -60,7 +59,7 @@
                     </td>
 
                     <td>
-                        <form action="{{ route('my-products.stock', ['product' => $product->slug]) }}"
+                        <form action="{{ route('products.stock', ['product' => $product->slug]) }}"
                               method="POST" style="display:flex;gap:6px;align-items:center;">
                             @csrf
                             @method('PATCH')
@@ -72,12 +71,11 @@
                     </td>
 
                     <td>
-                        <form action="{{ route('my-products.discount', ['product' => $product->slug]) }}"
+                        <form action="{{ route('products.discount', ['product' => $product->slug]) }}"
                               method="POST" style="display:flex;gap:6px;align-items:center;">
                             @csrf
                             @method('PATCH')
-                            <input type="number" name="discount_price" value="{{ $product->discount_price }}"
-                                   min="0" max="100"
+                            <input type="number" name="discount_price" value="{{ $product->diskon }}"                                    min="0" max="100"
                                    class="umkm-input" style="width:80px;padding:6px 8px;">
                             <button type="submit" class="umkm-btn umkm-btn--secondary umkm-btn--icon"
                                     title="Simpan">💾</button>
@@ -86,9 +84,10 @@
 
                     <td>
                         <div style="display:flex;gap:6px;">
-                            <a href="/my-products/{{ $product->slug }}/edit"
+                            <a href="{{ route('products.edit', $product->slug) }}"
                                class="umkm-btn umkm-btn--secondary umkm-btn--icon" title="Edit">✏️</a>
-                            <form method="POST" action="/my-products/{{ $product->slug }}">
+                               
+                            <form method="POST" action="{{ route('products.destroy', $product->slug) }}">
                                 @csrf
                                 @method('DELETE')
                                 <button class="umkm-btn umkm-btn--danger umkm-btn--icon" title="Hapus">🗑</button>

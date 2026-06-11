@@ -27,6 +27,7 @@ return new class extends Migration
         $table->integer('terjual')->default(0); 
 
         $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+        $table->integer('stock')->default(0);
 
         $table->timestamps();
     });

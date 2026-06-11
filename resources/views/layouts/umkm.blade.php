@@ -672,9 +672,9 @@
         {{-- ── Navbar ─────────────────────────────────────────── --}}
         <nav class="umkm-navbar umkm-fade umkm-fade--1">
             <div class="umkm-navbar__inner">
-                <a href="{{ route('dashboard') }}"
-                    class="umkm-navbar__btn {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                    📊 Dashboard
+                <a href="{{ route('umkm.dashboard') }}" 
+                class="umkm-navbar__btn {{ request()->routeIs('umkm.dashboard') ? 'active' : '' }}">
+                📊 Dashboard
                 </a>
                 <a href="{{ route('my-products') }}"
                     class="umkm-navbar__btn {{ request()->routeIs('my-products*') ? 'active' : '' }}">
