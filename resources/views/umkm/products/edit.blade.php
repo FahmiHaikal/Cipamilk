@@ -1,508 +1,126 @@
-<!DOCTYPE html>
-<html lang="id">
+@extends('layouts.umkm')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Produk - UMKM</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+@section('title', 'Edit Produk - UMKM')
 
-        :root {
-            --primary: #10b981;
-            --primary-dark: #059669;
-            --primary-light: #d1fae5;
-            --secondary: #f59e0b;
-            --danger: #ef4444;
-            --dark: #1f2937;
-            --gray-light: #f9fafb;
-            --gray-medium: #e5e7eb;
-            --gray-text: #6b7280;
-            --white: #ffffff;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
+@section('content')
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
-            color: var(--dark);
-        }
+<div class="umkm-card--narrow">
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 24px;
-        }
+<div class="umkm-page-header umkm-fade umkm-fade--2">
+    <h1>Edit Produk</h1>
+    <p>Perbarui informasi produk UMKM Anda</p>
+</div>
 
-        /* Header */
-        .page-header {
-            margin-bottom: 32px;
-        }
+<div class="umkm-card umkm-fade umkm-fade--3">
+    <div class="umkm-card__head">📦 Informasi Produk</div>
 
-        .page-header h1 {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 8px;
-            letter-spacing: -0.5px;
-        }
+    <form method="POST" action="{{ url('/my-products/' . $product->slug) }}"
+          enctype="multipart/form-data" class="umkm-card__body">
+        @csrf
+        @method('PUT')
 
-        .page-header p {
-            color: var(--gray-text);
-            font-size: 15px;
-            font-weight: 400;
-        }
+        {{-- Foto Produk --}}
+        <div class="umkm-form-group">
+            <label class="umkm-label">Foto Produk</label>
+            <input type="file" id="foto" name="foto" accept="image/*" style="display:none">
 
-        /* Form Card */
-        .form-card {
-            background: var(--white);
-            border-radius: 16px;
-            box-shadow: var(--shadow-md);
-            overflow: hidden;
-        }
-
-        .form-card-header {
-            padding: 24px;
-            background: linear-gradient(135deg, #f9fafb, #f3f4f6);
-            border-bottom: 1px solid var(--gray-medium);
-        }
-
-        .form-card-header h2 {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--dark);
-        }
-
-        .form-card-body {
-            padding: 32px;
-        }
-
-        /* Form Group */
-        .form-group {
-            margin-bottom: 24px;
-        }
-
-        .form-group:last-child {
-            margin-bottom: 0;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1.5px solid var(--gray-medium);
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 14px;
-            color: var(--dark);
-            transition: all 0.3s ease;
-            background: var(--white);
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        /* Two Column Layout */
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-        }
-
-        /* File Upload */
-        .file-upload-wrapper {
-            position: relative;
-        }
-
-        .file-upload-input {
-            display: none;
-        }
-
-        .file-upload-label {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 32px 16px;
-            border: 2px dashed var(--gray-medium);
-            border-radius: 8px;
-            background: var(--gray-light);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .file-upload-label:hover {
-            border-color: var(--primary);
-            background: rgba(16, 185, 129, 0.05);
-        }
-
-        .file-upload-text {
-            text-align: center;
-        }
-
-        .file-upload-icon {
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
-
-        .file-upload-text p {
-            font-size: 13px;
-            color: var(--gray-text);
-            margin: 4px 0;
-        }
-
-        .file-upload-text .main {
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 4px;
-        }
-
-        /* Form Actions */
-        .form-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 32px;
-            padding-top: 24px;
-            border-top: 1px solid var(--gray-medium);
-        }
-
-        .btn {
-            padding: 12px 28px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 14px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: var(--white);
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
-        }
-
-        .btn-secondary {
-            background: var(--gray-light);
-            color: var(--dark);
-            border: 1.5px solid var(--gray-medium);
-        }
-
-        .btn-secondary:hover {
-            background: var(--gray-medium);
-            border-color: var(--gray-text);
-        }
-
-        /* Animation */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .page-header,
-        .form-card {
-            animation: fadeInUp 0.6s ease-out forwards;
-        }
-
-        .page-header {
-            animation-delay: 0.1s;
-        }
-
-        .form-card {
-            animation-delay: 0.2s;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px 16px;
-            }
-
-            .page-header h1 {
-                font-size: 24px;
-            }
-
-            .form-card-body {
-                padding: 20px;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-
-            .form-actions {
-                flex-direction: column;
-                gap: 8px;
-                margin-top: 24px;
-            }
-
-            .btn {
-                width: 100%;
-            }
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-        <!-- Header -->
-        <div class="page-header">
-            <h1>Edit Produk</h1>
-            <p>Perbarui informasi produk UMKM Anda</p>
+            <label for="foto" class="umkm-upload-label"
+                   style="flex-direction:column;gap:10px;">
+                @if($product->image)
+                    <img id="preview-image"
+                         src="{{ asset('storage/' . $product->image) }}"
+                         alt="{{ $product->nama_produk }}"
+                         style="max-width:320px;max-height:220px;object-fit:contain;
+                                border-radius:8px;border:1px solid var(--gray-medium);">
+                    <p style="font-weight:600;color:var(--dark);font-size:13px;">
+                        {{ basename($product->image) }}
+                    </p>
+                    <p style="font-size:13px;color:var(--gray-text);">Klik untuk mengganti foto</p>
+                @else
+                    <div style="font-size:32px;">📸</div>
+                    <div>
+                        <p style="font-weight:600;color:var(--dark);">Pilih foto atau drag &amp; drop</p>
+                        <p style="font-size:13px;color:var(--gray-text);">PNG, JPG, GIF (Maks. 5MB)</p>
+                    </div>
+                @endif
+            </label>
         </div>
 
-        <!-- Form Card -->
-        <div class="form-card">
-            <div class="form-card-header">
-                <h2>📦 Informasi Produk</h2>
+        <div class="umkm-form-row">
+            <div class="umkm-form-group">
+                <label class="umkm-label" for="nama_produk">Nama Produk *</label>
+                <input class="umkm-input" type="text" id="nama_produk" name="nama_produk"
+                       value="{{ old('nama_produk', $product->nama_produk) }}" required>
             </div>
-
-            <form
-                method="POST"
-                action="{{ url('/my-products/' . $product->slug) }}"
-                enctype="multipart/form-data"
-                class="form-card-body">
-                @csrf
-                @method('PUT')
-
-                <!-- Foto Produk -->
-                <div class="form-group file-upload-wrapper">
-                    <label for="foto">Foto Produk</label>
-
-                    <input
-                        type="file"
-                        id="foto"
-                        name="foto"
-                        class="file-upload-input"
-                        accept="image/*">
-
-                    <label for="foto" class="file-upload-label">
-
-                        @if($product->image)
-                        <div class="file-upload-text">
-
-                            <img
-                                id="preview-image"
-                                src="{{ asset('storage/' . $product->image) }}"
-                                alt="{{ $product->nama_produk }}"
-                                style="max-width: 350px;
-                                max-height: 220px;
-                                object-fit: contain;
-                                display:block;
-                                margin:0 auto 12px;">
-                            <p class="main">
-                                {{ basename($product->image) }}
-                            </p>
-
-                            <p>Klik untuk mengganti foto</p>
-
-                        </div>
-
-                        @else
-
-                        <div class="file-upload-text">
-                            <div class="file-upload-icon">📸</div>
-                            <p class="main">Pilih foto atau drag & drop</p>
-                            <p>PNG, JPG, GIF (Max. 5MB)</p>
-                        </div>
-
-                        @endif
-
-                    </label>
-                </div>
-
-                <!-- Two Column: Nama & Kategori -->
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="nama_produk">Nama Produk *</label>
-                        <input
-                            type="text"
-                            id="nama_produk"
-                            name="nama_produk"
-                            value="{{ old('nama_produk', $product->nama_produk) }}"
-                            required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="kategori">Kategori *</label>
-
-                        <select id="kategori" name="kategori" required>
-                            <option value="">-- Pilih Kategori --</option>
-                            <option value="Susu" {{ $product->kategori == 'Susu' ? 'selected' : '' }}>
-                                Susu
-                            </option>
-
-                            <option value="Es" {{ $product->kategori == 'Es' ? 'selected' : '' }}>
-                                Es
-                            </option>
-
-                            <option value="Kue" {{ $product->kategori == 'Kue' ? 'selected' : '' }}>
-                                Kue
-                            </option>
-
-                            <option value="Yogurt" {{ $product->kategori == 'Yogurt' ? 'selected' : '' }}>
-                                Yogurt
-                            </option>
-
-                            <option value="Minuman" {{ $product->kategori == 'Minuman' ? 'selected' : '' }}>
-                                Minuman
-                            </option>
-
-                            <option value="Makanan Ringan" {{ $product->kategori == 'Makanan Ringan' ? 'selected' : '' }}>
-                                Makanan Ringan
-                            </option>
-
-                            <option value="Keju" {{ $product->kategori == 'Keju' ? 'selected' : '' }}>
-                                Keju
-                            </option>
-
-                            <option value="Mentega" {{ $product->kategori == 'Mentega' ? 'selected' : '' }}>
-                                Mentega
-                            </option>
-
-                            <option value="Produk Kecantikan" {{ $product->kategori == 'Produk Kecantikan' ? 'selected' : '' }}>
-                                Produk Kecantikan
-                            </option>
-
-                            <option value="Lainnya" {{ $product->kategori == 'Lainnya' ? 'selected' : '' }}>
-                                Lainnya
-                            </option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Label/Tag -->
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="harga">Harga</label>
-                        <input
-                            type="number"
-                            id="harga"
-                            name="harga"
-                            value="{{ old('harga', $product->harga) }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="label">Label/Tag</label>
-                        <input
-                            type="text"
-                            id="label_gizi"
-                            name="label_gizi"
-                            value="{{ old('label_gizi', $product->label_gizi) }}" required>
-                    </div>
-                </div>
-
-                <!-- Deskripsi -->
-                <div class="form-group">
-                    <label for="deskripsi">Deskripsi Produk</label>
-                    <textarea
-                        id="deskripsi"
-                        name="deskripsi" required>{{ old('deskripsi', $product->deskripsi) }}</textarea>
-                </div>
-
-                <!--rating & terjual -->
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="rating">Rating</label>
-                        <input
-                            type="number"
-                            step="0.1"
-                            min="0"
-                            max="5"
-                            id="rating"
-                            name="rating"
-                            value="{{ old('rating', $product->rating) }}">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="terjual">Terjual</label>
-                        <input
-                            type="number"
-                            min="0"
-                            id="terjual"
-                            name="terjual"
-                            value="{{ old('terjual', $product->terjual) }}">
-                    </div>
-                </div>
-
-                <!-- Masa Simpan -->
-                <div class="form-group">
-                    <label for="masa_simpan">Masa Simpan</label>
-                    <input
-                        type="text"
-                        id="masa_simpan"
-                        name="masa_simpan"
-                        value="{{ old('masa_simpan', $product->masa_simpan) }}">
-                </div>
-
-                <!-- Form Actions -->
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">
-                        ✓ Update Produk
-                    </button>
-                    <a href="{{ route('my-products') }}" class="btn btn-secondary">
-                        ✕ Batal
-                    </a>
-                </div>
-            </form>
+            <div class="umkm-form-group">
+                <label class="umkm-label" for="kategori">Kategori *</label>
+                <select class="umkm-select" id="kategori" name="kategori" required>
+                    <option value="">-- Pilih Kategori --</option>
+                    @foreach(['Susu','Es','Kue','Yogurt','Minuman','Makanan Ringan','Keju','Mentega','Produk Kecantikan','Lainnya'] as $k)
+                        <option value="{{ $k }}" {{ $product->kategori == $k ? 'selected' : '' }}>{{ $k }}</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
-    </div>
 
-    <script>
-        const fotoInput = document.getElementById('foto');
+        <div class="umkm-form-row">
+            <div class="umkm-form-group">
+                <label class="umkm-label" for="harga">Harga *</label>
+                <input class="umkm-input" type="number" id="harga" name="harga"
+                       value="{{ old('harga', $product->harga) }}" required>
+            </div>
+            <div class="umkm-form-group">
+                <label class="umkm-label" for="label_gizi">Label / Tag *</label>
+                <input class="umkm-input" type="text" id="label_gizi" name="label_gizi"
+                       value="{{ old('label_gizi', $product->label_gizi) }}" required>
+            </div>
+        </div>
+
+        <div class="umkm-form-group">
+            <label class="umkm-label" for="deskripsi">Deskripsi Produk *</label>
+            <textarea class="umkm-textarea" id="deskripsi" name="deskripsi"
+                      required>{{ old('deskripsi', $product->deskripsi) }}</textarea>
+        </div>
+
+        <div class="umkm-form-row">
+            <div class="umkm-form-group">
+                <label class="umkm-label" for="rating">Rating</label>
+                <input class="umkm-input" type="number" step="0.1" min="0" max="5"
+                       id="rating" name="rating"
+                       value="{{ old('rating', $product->rating) }}">
+            </div>
+            <div class="umkm-form-group">
+                <label class="umkm-label" for="terjual">Terjual</label>
+                <input class="umkm-input" type="number" min="0"
+                       id="terjual" name="terjual"
+                       value="{{ old('terjual', $product->terjual) }}">
+            </div>
+        </div>
+
+        <div class="umkm-form-group">
+            <label class="umkm-label" for="masa_simpan">Masa Simpan</label>
+            <input class="umkm-input" type="text" id="masa_simpan" name="masa_simpan"
+                   value="{{ old('masa_simpan', $product->masa_simpan) }}">
+        </div>
+
+        <div class="umkm-form-actions">
+            <button type="submit" class="umkm-btn umkm-btn--primary">✓ Update Produk</button>
+            <a href="{{ route('my-products') }}" class="umkm-btn umkm-btn--secondary">✕ Batal</a>
+        </div>
+    </form>
+</div>
+
+</div>{{-- /.umkm-card--narrow --}}
+
+@endsection
+
+@push('scripts')
+<script>
+    document.getElementById('foto').addEventListener('change', function() {
+        const file = this.files[0];
+        if (!file) return;
         const preview = document.getElementById('preview-image');
-
-        fotoInput.addEventListener('change', function() {
-
-            const file = this.files[0];
-
-            if (!file) return;
-
-            preview.src = URL.createObjectURL(file);
-        });
-    </script>
-</body>
-
-</html>
+        if (preview) preview.src = URL.createObjectURL(file);
+    });
+</script>
+@endpush
