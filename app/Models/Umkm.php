@@ -12,4 +12,9 @@ class Umkm extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

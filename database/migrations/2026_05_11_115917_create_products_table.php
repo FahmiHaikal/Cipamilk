@@ -26,6 +26,8 @@ return new class extends Migration
         $table->decimal('rating', 2, 1)->default(0);
         $table->integer('terjual')->default(0); 
 
+        $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+
         $table->timestamps();
     });
 }

@@ -2,6 +2,7 @@
 
 @section('content')
 
+<!-- Hero Section -->
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
     <div class="bg-green-50 rounded-[2rem] overflow-hidden flex flex-col-reverse lg:flex-row items-center shadow-sm border border-green-100 relative">
         <div class="w-full lg:w-1/2 p-10 lg:p-16 flex flex-col justify-center text-center lg:text-left z-10">
@@ -29,6 +30,7 @@
     </div>
 </section>
 
+<!-- Stats Section -->
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 relative z-20 -mt-8">
     <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-gray-100">
@@ -52,6 +54,7 @@
     </div>
 </section>
 
+<!-- Tentang Section -->
 <section id="tentang" class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col lg:flex-row gap-12 items-center mb-20">
@@ -95,6 +98,7 @@
     </div>
 </section>
 
+<!-- Katalog / Hot Items Section -->
 <section id="katalog" class="max-w-7xl mx-auto px-4 py-16">
     <div class="flex justify-between items-center mb-8">
         <div>
@@ -106,6 +110,7 @@
         </a>
     </div>
 
+    <!-- Swiper Container -->
     <div class="swiper hotItemsSwiper relative pb-10">
         <div class="swiper-wrapper">
             @foreach($hotItems as $item)
@@ -144,11 +149,13 @@
             </div>
             @endforeach
         </div>
+        <!-- Tombol Navigasi Swiper -->
         <div class="swiper-button-next !text-green-700 !bg-white !w-12 !h-12 !rounded-full shadow-lg after:!text-lg border border-gray-100 hover:!bg-green-50 transition-colors"></div>
         <div class="swiper-button-prev !text-green-700 !bg-white !w-12 !h-12 !rounded-full shadow-lg after:!text-lg border border-gray-100 hover:!bg-green-50 transition-colors"></div>
     </div>
 </section>
 
+<!-- Mitra UMKM Section -->
 <section id="mitra-umkm" class="py-16 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
@@ -172,6 +179,7 @@
     </div>
 </section>
 
+<!-- Jurnal Section -->
 <section id="jurnal" class="max-w-7xl mx-auto px-4 py-16">
     <div class="flex justify-between items-end mb-8">
         <div>
@@ -216,6 +224,7 @@
     @endif
 </section>
 
+<!-- Lokasi Section -->
 <section id="lokasi" class="max-w-7xl mx-auto px-4 py-16 mb-12">
     <div class="bg-gray-900 rounded-[2.5rem] overflow-hidden flex flex-col md:flex-row shadow-2xl relative">
         <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-green-500 rounded-full opacity-20 blur-3xl"></div>
@@ -242,6 +251,63 @@
     </div>
 </section>
 
+<!-- Footer -->
+<footer class="bg-white border-t border-gray-200 mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center md:items-start text-center md:text-left">
+            
+            <!-- Identitas Brand & Deskripsi Singkat -->
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Super Susu Cipageran</h2>
+                <p class="mt-3 text-sm text-gray-500 leading-relaxed max-w-xs mx-auto md:mx-0">
+                    Platform etalase digital untuk mendukung pemasaran produk olahan susu. Sebuah dedikasi nyata untuk pemberdayaan UMKM lokal.
+                </p>
+            </div>
+
+            <!-- Tautan Navigasi -->
+            <div class="flex flex-col items-center md:items-start">
+                <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">Informasi Terkait</h3>
+                <ul class="space-y-3">
+                    <li>
+                        <a href="{{ url('/#tentang') }}" class="text-sm text-gray-600 hover:text-green-600 transition-colors">Program KKN Tematik</a>
+                    </li>
+                    <li>
+                        <a href="https://telkomuniversity.ac.id" target="_blank" class="text-sm text-gray-600 hover:text-green-600 transition-colors">Telkom University</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('product.index') }}" class="text-sm text-gray-600 hover:text-green-600 transition-colors">Sentra UMKM Cipageran</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Dukungan & Afiliasi -->
+            <div class="flex flex-col items-center md:items-start">
+                <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">Didukung Oleh</h3>
+                <div class="flex flex-wrap justify-center md:justify-start gap-3">
+                    <span class="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-md text-xs font-medium text-gray-600">
+                        Mahasiswa KKN
+                    </span>
+                    <span class="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-md text-xs font-medium text-gray-600">
+                        UMKM Cimahi
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Garis Bawah & Hak Cipta -->
+        <div class="mt-12 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-sm text-gray-500">
+                © 2026 CipaMilk. Kolaborasi KKN & UMKM Cimahi.
+            </p>
+            <div class="text-sm text-gray-400">
+                Pengembangan Inovasi Berkelanjutan
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Script Swiper -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {

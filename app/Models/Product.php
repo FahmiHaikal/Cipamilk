@@ -30,4 +30,10 @@ class Product extends Model
     {
         return $this->belongsTo(Umkm::class);
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    
+        }
 }
