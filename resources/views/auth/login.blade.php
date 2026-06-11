@@ -2,6 +2,16 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
+        <div class="text-center mb-6">
+        <h1 class="text-3xl font-bold text-[#d9a15b]">
+            CIPAMILK
+        </h1>
+
+        <p class="mt-2 text-gray-600">
+            Masuk ke akun Anda
+        </p>
+    </div>
+
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
@@ -33,15 +43,22 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+
 
             <x-primary-button class="ms-3">
                 {{ __('Log in') }}
             </x-primary-button>
+        </div>
+
+                <div class="mt-6 text-center">
+            <span class="text-sm text-gray-600">
+                Belum punya akun?
+            </span>
+
+            <a href="{{ route('register') }}"
+            class="font-semibold text-green-600 hover:text-green-700">
+                Daftar sekarang
+            </a>
         </div>
     </form>
 </x-guest-layout>

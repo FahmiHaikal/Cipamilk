@@ -1,57 +1,67 @@
-<header class="bg-[#1a1710] border-b border-white/10 sticky top-0 z-50">
+<header class="bg-white sticky top-0 z-50 shadow-sm border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
 
-    <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 flex items-center gap-4">
-
-        {{-- Logo --}}
-        <a href="{{ url('/') }}"
-           class="text-white text-2xl md:text-4xl whitespace-nowrap"
-           style="font-family:'Cormorant Garamond', serif;">
-            CIPA<span class="text-[#c08a4d]">M</span>ILK
-        </a>
-
-        {{-- Search --}}
-        <div class="flex-1 flex justify-center">
-
-            <form class="w-full max-w-2xl">
-                <div class="relative">
-
-                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                        search
-                    </span>
-
-                    <input
-                        type="text"
-                        placeholder="Cari produk..."
-                        class="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white/10 border border-white/10 text-white placeholder:text-gray-400 focus:outline-none focus:border-[#c08a4d]"
-                    >
-
+            <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.location.href='{{ url('/') }}'">
+                <div class="w-9 h-9 bg-blue-600 text-white rounded-xl flex items-center justify-center font-bold text-lg shadow-inner">
+                    S
                 </div>
-            </form>
+                <div>
+                    <h1 class="font-bold text-xl text-gray-900 leading-none">Cipamilk</h1>
+                    <p class="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mt-0.5">Susu Sentra Cipageran</p>
+                </div>
+            </div>
+
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="{{ url('/') }}"
+                    class="text-gray-600 hover:text-blue-600 font-medium text-sm transition-colors">
+                    Beranda
+                </a>
+
+                <a href="{{ url('/#katalog') }}"
+                    class="text-gray-600 hover:text-blue-600 font-medium text-sm transition-colors">
+                    Katalog Produk
+                </a>
+
+                <a href="{{ url('/#tentang-kkn') }}"
+                    class="text-gray-600 hover:text-blue-600 font-medium text-sm transition-colors">
+                    Tentang Program
+                </a>
+
+                @auth
+                @if(Auth::user()->role === 'super_admin')
+                <a href="{{ route('admin.products.pending') }}"
+                    class="text-gray-600 hover:text-blue-600 font-medium text-sm transition-colors">
+                    Dashboard
+                </a>
+                @else
+                <a href="{{ route('dashboard') }}"
+                    class="text-gray-600 hover:text-blue-600 font-medium text-sm transition-colors">
+                    Dashboard
+                </a>
+                @endif
+                @else
+                <a href="{{ route('login') }}"
+                    class="text-gray-600 hover:text-blue-600 font-medium text-sm transition-colors">
+                    Masuk
+                </a>
+                @endauth
+            </nav>
+
+            <div class="hidden md:flex items-center gap-4">
+                <a href="#" class="inline-flex items-center justify-center px-5 py-2 text-sm font-medium text-white transition-all bg-blue-600 border border-transparent rounded-full hover:bg-blue-700 hover:shadow-md">
+                    Hubungi Produsen
+                </a>
+            </div>
+
+            <div class="flex items-center md:hidden">
+                <button type="button" class="text-gray-500 hover:text-gray-900 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
 
         </div>
-
-        {{-- Dashboard / Login --}}
-        @auth
-
-    @if(Auth::user()->role === 'super_admin')
-        <a href="{{ route('admin.products.pending') }}"
-           class="text-white hover:text-[#c08a4d] whitespace-nowrap transition">
-            Dashboard
-        </a>
-    @else
-        <a href="{{ route('dashboard') }}"
-           class="text-white hover:text-[#c08a4d] whitespace-nowrap transition">
-            Dashboard
-        </a>
-    @endif
-
-    @else
-        <a href="{{ route('login') }}"
-        class="text-white hover:text-[#c08a4d] whitespace-nowrap transition">
-            Masuk
-        </a>
-    @endauth
-
     </div>
-
 </header>
