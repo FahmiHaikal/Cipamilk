@@ -16,13 +16,7 @@ class Product extends Model
         'masa_simpan',
         'label_gizi',
         'image',
-        'diskon',
-        'rating',
-        'terjual',
-        'status',
-        'stock'
     ];
-
 
     public function getRouteKeyName(): string
     {
@@ -33,10 +27,4 @@ class Product extends Model
     {
         return $this->belongsTo(Umkm::class);
     }
-
-    public function reviews()
-    {
-        return $this->hasMany(Review::class);
-    
-        }
 }

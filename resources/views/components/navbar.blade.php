@@ -1,85 +1,40 @@
-<header class="bg-white sticky top-0 z-50 shadow-sm border-b border-gray-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16">
-            
-            <!-- Logo Brand -->
-            <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.location.href='{{ url('/') }}'">
-                <div class="w-9 h-9 bg-green-600 text-white rounded-xl flex items-center justify-center font-bold text-lg shadow-inner">
-                    C
-                </div>
-                <div>
-                    <h1 class="font-bold text-xl text-gray-900 leading-none">Cipamilk</h1>
-                    <p class="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mt-0.5">Susu Sentra Cipageran</p>
-                </div>
+<header class="sticky top-0 z-50 max-w-7xl mx-auto w-full px-margin-mobile md:px-gutter pt-4 md:pt-6">
+    <nav class="relative bg-surface-white brutal-container px-4 py-3 md:px-8 md:py-4" aria-label="Navigasi utama">
+        <div class="flex items-center justify-between gap-4">
+            <a href="{{ url('/') }}" class="flex items-center" aria-label="CipaMilk beranda">
+                <img src="{{ asset('assets/images/cipamilk_logo.png') }}" alt="CipaMilk Logo" class="h-10 md:h-12 scale-125 origin-left object-contain">
+            </a>
+
+            <div class="hidden md:flex items-center gap-8 text-label-bold font-label-bold uppercase absolute left-1/2 -translate-x-1/2">
+                <a class="text-primary border-b-[3px] border-border-primary pb-1" href="{{ url('/') }}">Beranda</a>
+                <a class="text-gray-800 hover:text-primary transition-colors" href="{{ url('/#katalog') }}">Katalog</a>
+                <a class="text-gray-800 hover:text-primary transition-colors" href="{{ url('/#lokasi') }}">Lokasi Kami</a>
             </div>
 
-            <!-- Navigasi Desktop -->
-            <nav class="hidden md:flex space-x-8">
-                <a href="{{ url('/') }}" class="text-gray-600 hover:text-green-600 font-medium text-sm transition-colors border-b-2 border-transparent hover:border-green-600 pb-1">
-                    Beranda
+            <div class="flex items-center gap-3">
+                <a href="{{ url('/#katalog') }}" class="hidden md:flex brutal-container !rounded-lg bg-accent-yellow px-6 py-2 brutal-hover text-label-bold font-label-bold uppercase">
+                    Lihat Produk
                 </a>
-                <a href="{{ route('product.index') }}" class="text-gray-600 hover:text-green-600 font-medium text-sm transition-colors border-b-2 border-transparent hover:border-green-600 pb-1">
-                    Katalog Produk
-                </a>
-                <a href="{{ url('/#tentang') }}" class="text-gray-600 hover:text-green-600 font-medium text-sm transition-colors border-b-2 border-transparent hover:border-green-600 pb-1">
-                    Tentang Sentra
-                </a>
-                <a href="{{ url('/#jurnal') }}" class="text-gray-600 hover:text-green-600 font-medium text-sm transition-colors border-b-2 border-transparent hover:border-green-600 pb-1">
-                    Jurnal KKN
-                </a>
-            </nav>
 
-            <!-- Autentikasi / Call to Action -->
-            <div class="hidden md:flex items-center gap-4">
-                
-                <!-- JIKA BELUM LOGIN (GUEST) -->
-                @guest
-                    <a href="{{ route('login') }}" class="text-sm font-bold text-gray-600 hover:text-green-600 transition-colors">
-                        Masuk
-                    </a>
-                    <a href="{{ route('register') }}" class="inline-flex items-center justify-center px-5 py-2 text-sm font-bold text-white transition-all bg-green-600 border border-transparent rounded-full hover:bg-green-700 hover:shadow-md">
-                        Daftar
-                    </a>
-                @endguest
-
-                <!-- JIKA SUDAH LOGIN (AUTH) -->
-                @auth
-                    <!-- Penentuan arah link berdasarkan Role -->
-                    @php
-                        $userRole = Auth::user()->role;
-                        if ($userRole === 'admin') {
-                            $dashboardLink = route('admin.dashboard');
-                        } elseif ($userRole === 'umkm') {
-                            $dashboardLink = route('umkm.dashboard');
-                        } else {
-                            $dashboardLink = route('profile.edit'); // Konsumen diarahkan ke profil
-                        }
-                    @endphp
-
-                    <!-- Info User & Link Dashboard -->
-                    <a href="{{ $dashboardLink }}" class="flex items-center gap-2 text-sm font-bold text-gray-700 hover:text-green-600 transition-colors bg-gray-50 px-4 py-1.5 rounded-full border border-gray-200">
-                        <span class="material-symbols-outlined text-lg">account_circle</span>
-                        <span class="truncate max-w-[100px]">{{ Auth::user()->name }}</span>
-                    </a>
-
-                    <!-- Tombol Logout -->
-                    <form method="POST" action="{{ route('logout') }}" class="m-0">
-                        @csrf
-                        <button type="submit" class="text-sm font-bold text-red-500 hover:text-red-700 transition-colors px-2 py-1">
-                            Keluar
-                        </button>
-                    </form>
-                @endauth
-
-            </div>
-
-            <!-- Tombol Menu Mobile (Hamburger) -->
-            <div class="flex items-center md:hidden">
-                <button type="button" class="text-gray-500 hover:text-gray-900 focus:outline-none">
-                    <span class="material-symbols-outlined">menu</span>
+                <button
+                    type="button"
+                    class="md:hidden inline-flex h-11 w-11 items-center justify-center rounded-xl border-[3px] border-border-primary bg-accent-yellow shadow-[4px_4px_0px_0px_#000000] transition-all duration-200 active:translate-x-1 active:translate-y-1 active:shadow-none"
+                    aria-controls="mobile-menu"
+                    aria-expanded="false"
+                    data-mobile-menu-toggle
+                >
+                    <span class="sr-only">Buka menu navigasi</span>
+                    <span class="material-symbols-outlined text-2xl" data-mobile-menu-icon>menu</span>
                 </button>
             </div>
-
         </div>
-    </div>
+
+        <div id="mobile-menu" class="hidden md:hidden absolute left-0 right-0 top-full mt-3 rounded-2xl border-[3px] border-border-primary bg-surface-white p-3 shadow-[6px_6px_0px_0px_#000000]" data-mobile-menu>
+            <div class="grid gap-2 text-label-bold font-label-bold uppercase">
+                <a class="rounded-xl border-[3px] border-border-primary bg-accent-green px-4 py-3 text-black" href="{{ url('/') }}" data-mobile-menu-link>Beranda</a>
+                <a class="rounded-xl border-[3px] border-border-primary bg-accent-yellow px-4 py-3 text-black" href="{{ url('/#katalog') }}" data-mobile-menu-link>Katalog</a>
+                <a class="rounded-xl border-[3px] border-border-primary bg-accent-pink px-4 py-3 text-black" href="{{ url('/#lokasi') }}" data-mobile-menu-link>Lokasi Kami</a>
+            </div>
+        </div>
+    </nav>
 </header>

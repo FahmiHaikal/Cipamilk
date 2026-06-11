@@ -1,3 +1,46 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+    /* Palet Warna Neobrutalism */
+    --color-primary: #2b53c4;
+    --color-accent-pink: #F676B6;
+    --color-background-main: #5E81F4;
+    --color-surface-container-low: #f3f2fd;
+    --color-accent-purple: #C98CF4;
+    --color-accent-yellow: #F6F876;
+    --color-border-primary: #000000;
+    --color-background: #faf8ff;
+    --color-accent-green: #68F4B1;
+    --color-surface-variant: #e2e1eb;
+    --color-surface-dim: #dad9e3;
+    --color-text-primary: #000000;
+    --color-surface-white: #FFFFFF;
+
+    /* Jarak & Ukuran */
+    --spacing-gutter: 24px;
+    --spacing-margin-mobile: 16px;
+    --spacing-margin-desktop: 40px;
+
+    /* Tipografi Neobrutalism */
+    --font-h2: "Space Grotesk", sans-serif;
+    --font-label-bold: "Space Grotesk", sans-serif;
+    --font-body-lg: "Space Grotesk", sans-serif;
+    --font-h1: "Space Grotesk", sans-serif;
+    --font-body-md: "Space Grotesk", sans-serif;
+}
+
+@layer utilities {
+    .brutal-border {
+        @apply border-[3px] border-black;
+    }
+    .brutal-shadow {
+        @apply shadow-[6px_6px_0px_0px_#000000];
+    }
+    .brutal-hover {
+        @apply transition-all duration-200 hover:translate-x-[6px] hover:translate-y-[6px] hover:shadow-none cursor-pointer;
+    }
+    /* Di sini perbaikannya: kita tidak memakai brutal-border dan brutal-shadow secara berantai */
+    .brutal-container {
+        @apply rounded-2xl border-[3px] border-black shadow-[6px_6px_0px_0px_#000000];
+    }
+}
