@@ -78,7 +78,7 @@
                 @foreach($products as $product)
                     <a href="{{ route('product.detail', $product) }}" class="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-md transition-shadow group flex flex-col h-full relative">
                         <div class="bg-gray-50 aspect-square p-4 flex items-center justify-center">
-                            <img src="{{ asset($product->image) }}" alt="{{ $product->nama_produk }}" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300">
+                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->nama_produk }}" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300">
                         </div>
 
                         @if(isset($product->diskon) && $product->diskon > 0)

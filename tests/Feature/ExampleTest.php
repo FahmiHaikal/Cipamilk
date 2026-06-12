@@ -23,22 +23,22 @@ class ExampleTest extends TestCase
 
         $response
             ->assertOk()
-            ->assertSee('Menu Kami')
+            ->assertSee('Katalog Produk UMKM')
             ->assertSee('Yoghurt Botol Ciyo')
-            ->assertSee('/p/yoghurt-botol-ciyo', false)
-            ->assertSee('Lihat Detail');
+            ->assertSee('/katalog/yoghurt-botol-ciyo', false)
+            ->assertSee('shopping_cart');
     }
 
     public function test_product_detail_page_returns_qr_product_content_and_navigation(): void
     {
-        $response = $this->get('/p/yoghurt-botol-ciyo');
+        $response = $this->get('/katalog/yoghurt-botol-ciyo');
 
         $response
             ->assertOk()
             ->assertSee('Yoghurt Botol Ciyo')
             ->assertSee('Rp 8.000')
             ->assertSee('Yoghurt Ciyoo')
-            ->assertSee('Katalog')
-            ->assertSee('Produk Lainnya');
+            ->assertSee('Deskripsi Produk')
+            ->assertSee('Mungkin Anda Suka');
     }
 }

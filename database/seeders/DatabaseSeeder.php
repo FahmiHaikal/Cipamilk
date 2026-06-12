@@ -15,12 +15,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // 1. Buat User Admin Default
+        User::updateOrCreate(
+            ['email' => 'admin@cipamilk.com'],
+            [
+                'name' => 'Admin Cipamilk',
+                'password' => \Illuminate\Support\Facades\Hash::make('password'),
+                'role' => 'admin',
+            ]
+        );
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // 2. Buat User Konsumen Default
+        User::updateOrCreate(
+            ['email' => 'test@example.com'],
+            [
+                'name' => 'Test User',
+                'password' => \Illuminate\Support\Facades\Hash::make('password'),
+                'role' => 'konsumen',
+            ]
+        );
+
         $this->call([
             CipaMilkSeeder::class,
         ]);

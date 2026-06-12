@@ -47,6 +47,25 @@ class ProductVerificationController extends Controller
             'status' => 'approved'
         ]);
 
-        return back();
+        return back()->with('success', 'Produk berhasil disetujui.');
+    }
+
+    public function reject($id)
+    {
+        $product = Product::findOrFail($id);
+
+        $product->update([
+            'status' => 'rejected'
+        ]);
+
+        return back()->with('success', 'Produk berhasil ditolak.');
+    }
+
+    public function destroy($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->delete();
+
+        return back()->with('success', 'Produk berhasil dihapus.');
     }
 }

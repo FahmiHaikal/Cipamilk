@@ -71,7 +71,7 @@
                     <td>{{ $order->quantity }}</td>
                     <td class="umkm-currency">Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
                     <td>
-                        <form action="/orders/{{ $order->id }}/status" method="POST">
+                        <form action="{{ route('orders.status', $order->id) }}" method="POST">
                             @csrf
                             @method('PATCH')
                             <select class="umkm-select" name="status" onchange="this.form.submit()"
@@ -101,7 +101,9 @@
 <div id="orderModal" class="umkm-modal-overlay">
     <div class="umkm-modal">
         <p class="umkm-modal__title">➕ Tambah Pesanan</p>
-        <form action="/orders" method="POST">
+        
+        {{-- PERBAIKAN: Gunakan route('orders.store') agar URL-nya tepat menjadi /umkm/orders --}}
+        <form action="{{ route('orders.store') }}" method="POST">
             @csrf
             <div class="umkm-form-row">
                 <div class="umkm-form-group">

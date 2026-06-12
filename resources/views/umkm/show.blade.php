@@ -100,7 +100,7 @@
                     <a href="{{ route('product.detail', $product) }}" class="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-md transition-shadow group flex flex-col h-full relative">
                         <!-- Gambar Produk -->
                         <div class="bg-gray-50 aspect-square p-4 flex items-center justify-center">
-                            <img src="{{ asset($product->image) }}" alt="{{ $product->nama_produk }}" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300">
+                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->nama_produk }}" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300">
                         </div>
 
                         <!-- Banner Diskon -->
@@ -129,6 +129,46 @@
                             </div>
                         </div>
                     </a>
+                @endforeach
+            </div>
+        @endif
+    </section>
+
+    <!-- 4. Bagian Artikel / Jurnal UMKM -->
+    <section class="mt-12">
+        <div class="flex items-center gap-2 mb-6 border-b border-gray-200 pb-4">
+            <span class="material-symbols-outlined text-green-600 text-2xl">article</span>
+            <h2 class="text-xl font-bold text-gray-900">Jurnal & Prestasi {{ $umkm->nama_umkm }}</h2>
+        </div>
+
+        @if($umkm->articles->isEmpty())
+            <div class="bg-gray-50 rounded-2xl p-8 text-center border border-gray-100">
+                <p class="text-gray-500 text-sm">Belum ada jurnal atau berita yang diterbitkan oleh UMKM ini.</p>
+            </div>
+        @else
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                @foreach($umkm->articles as $article)
+                    <article class="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow flex flex-col">
+                        <div class="aspect-video bg-gray-100 relative overflow-hidden">
+                            <img src="{{ $article->image ? asset('storage/' . $article->image) : 'https://placehold.co/600x400/e2e8f0/475569?text=Berita' }}" 
+                                 alt="{{ $article->title }}" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <div class="p-5 flex flex-col flex-grow">
+                            <span class="text-xs font-semibold text-gray-400 mb-2">
+                                {{ \Carbon\Carbon::parse($article->published_at)->format('d M Y') }}
+                            </span>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2 line-clamp-2">
+                                <a href="{{ route('article.detail', $article) }}" class="hover:text-green-600 transition-colors">
+                                    {{ $article->title }}
+                                </a>
+                            </h3>
+                            <div class="flex-grow"></div>
+                            <a href="{{ route('article.detail', $article) }}" class="text-green-600 font-semibold text-sm flex items-center gap-1 hover:text-green-700 mt-4">
+                                Baca selengkapnya <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                            </a>
+                        </div>
+                    </article>
                 @endforeach
             </div>
         @endif

@@ -44,16 +44,15 @@ class RegisteredUserController extends Controller
             'role' => $request->role, 
         ]);
 
-        // --- TAMBAHKAN BLOK KODE INI ---
         // Jika yang mendaftar adalah UMKM, otomatis buatkan profil toko awal
         if ($user->role === 'umkm') {
             \App\Models\Umkm::create([
                 'user_id' => $user->id,
                 'nama_umkm' => 'Toko ' . $user->name, // Beri nama toko bawaan
                 'whatsapp' => '-', // Beri nilai default agar tidak error jika kolom ini required di database
+                'status' => 'pending',
             ]);
         }
-        // -------------------------------
 
         event(new \Illuminate\Auth\Events\Registered($user));
 

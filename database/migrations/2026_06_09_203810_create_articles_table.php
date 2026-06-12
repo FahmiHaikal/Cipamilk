@@ -9,18 +9,21 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-public function up(): void
-{
-    Schema::create('articles', function (Blueprint $table) {
-        $table->id();
-        $table->string('title');
-        $table->string('slug')->unique();
-        $table->string('image')->nullable();
-        $table->text('content');
-        $table->date('published_at')->nullable(); // Tanggal rilis berita
-        $table->timestamps();
-    });
-}
+    public function up(): void
+    {
+        Schema::create('articles', function (Blueprint $table) {
+            $table->id();
+            
+            $table->foreignId('umkm_id')->nullable()->constrained('umkms')->cascadeOnDelete();
+            
+            $table->string('title');
+            $table->string('slug')->unique();
+            $table->string('image')->nullable();
+            $table->text('content');
+            $table->date('published_at')->nullable();
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.

@@ -7,12 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends Model
 {
     protected $fillable = [
-        'title', 'slug', 'image', 'content', 'published_at'
+        'umkm_id', 'title', 'slug', 'image', 'content', 'published_at'
     ];
 
-    // Agar URL menggunakan slug, bukan ID
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    public function umkm()
+    {
+        return $this->belongsTo(Umkm::class);
     }
 }

@@ -14,7 +14,7 @@
 <div class="umkm-card umkm-fade umkm-fade--3" style="max-width:600px;">
     <div class="umkm-card__head">📋 Detail Pesanan</div>
 
-    <form action="/orders" method="POST" class="umkm-card__body">
+    <form action="{{ route('orders.store') }}" method="POST" class="umkm-card__body">
         @csrf
 
         {{-- Nama & No WA --}}

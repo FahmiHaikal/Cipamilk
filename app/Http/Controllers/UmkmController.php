@@ -12,7 +12,7 @@ class UmkmController extends Controller
     // Fungsi untuk publik (katalog mitra)
     public function show(Umkm $umkm): View
     {
-        $umkm->load('products');
+        $umkm->load(['products', 'articles']);
         return view('umkm.show', compact('umkm'));
     }
 
@@ -33,4 +33,6 @@ class UmkmController extends Controller
         // 4. Kirim ke view
         return view('umkm.dashboard', compact('totalProducts', 'totalStock', 'totalDiscounts'));
     }
+
+    
 }

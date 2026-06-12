@@ -12,8 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware){
         $middleware->alias([
-        'role' => \App\Http\Middleware\RoleMiddleware::class,
-    ]);
+            'role' => \App\Http\Middleware\RoleMiddleware::class,
+            'approved_umkm' => \App\Http\Middleware\CheckUmkmApproval::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

@@ -23,13 +23,10 @@ class OrderController extends Controller
 
         $orders = $query->get();
 
-        $products = Product::where(
-            'umkm_id',
-            Auth::user()->umkm->id
-        )->where(
-            'status',
-            'approved'
-        )->get();
+    $products = Product::query()
+        ->where('umkm_id', Auth::user()->umkm->id)
+        ->where('status', 'approved')
+        ->get();
 
         $totalOrders = $orders->count();
 
@@ -55,13 +52,10 @@ class OrderController extends Controller
 
     public function create()
     {
-        $products = Product::where(
-            'umkm_id',
-            Auth::user()->umkm->id
-        )->where(
-            'status',
-            'approved'
-        )->get();
+    $products = Product::query()
+        ->where('umkm_id', Auth::user()->umkm->id)
+        ->where('status', 'approved')
+        ->get();
 
         return view('umkm.orders.create', compact('products'));
     }
@@ -95,7 +89,7 @@ class OrderController extends Controller
             'order_date' => $request->order_date,
         ]);
 
-        return redirect('/orders');
+        return redirect()->route('orders');
     }
 
     public function updateStatus(
