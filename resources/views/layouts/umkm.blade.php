@@ -692,6 +692,13 @@
                     class="umkm-navbar__btn {{ request()->routeIs('settings*') ? 'active' : '' }}">
                     ⚙️ Pengaturan
                 </a>
+
+                <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                    <button type="submit" class="umkm-navbar__btn" style="cursor: pointer; width: 100%; text-align: left;">
+                        🚪 Logout
+                    </button>
+                </form>
             </div>
         </nav>
 
