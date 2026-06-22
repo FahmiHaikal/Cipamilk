@@ -8,14 +8,14 @@
     <nav class="flex text-sm text-gray-500 font-medium mb-6">
         <a href="{{ url('/') }}" class="hover:text-green-600 transition-colors">Beranda</a>
         <span class="mx-2">/</span>
-        <span class="text-gray-900">Jurnal UMKM</span>
+        <span class="text-gray-900">Berita</span>
     </nav>
 
     <!-- Header Jurnal -->
     <section class="bg-green-600 rounded-[2rem] p-10 md:p-16 text-center text-white relative overflow-hidden shadow-md">
         <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
         <div class="relative z-10">
-            <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Jurnal & Prestasi UMKM</h1>
+            <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Berita & Prestasi UMKM</h1>
             <p class="text-green-100 max-w-2xl mx-auto text-lg">Dokumentasi kegiatan, pencapaian, dan cerita di balik proses produksi peternak susu Sentra Cipageran.</p>
         </div>
     </section>

@@ -45,7 +45,7 @@
                         {{ $product->nama_produk }}
                     </h1>
 
-                    <!-- Rating & Terjual (Jika kolomnya sudah ditambahkan di database) -->
+                    <!-- Rating & Terjual -->
                     <div class="flex items-center gap-4 mb-6 text-sm">
                         <div class="flex items-center text-yellow-400">
                             <span class="material-symbols-outlined text-lg">star</span>
@@ -55,7 +55,7 @@
                         <span class="text-gray-500">Terjual {{ $product->terjual ?? '100+' }}</span>
                     </div>
 
-                    <!-- Harga -->
+                    <!-- Harga (Logika Diskon Diperbaiki) -->
                     <div class="mb-6 pb-6 border-b border-gray-100">
                         @if(isset($product->diskon) && $product->diskon > 0)
                             @php $hargaDiskon = $product->harga - ($product->harga * ($product->diskon / 100)); @endphp
@@ -105,22 +105,37 @@
                         $pesan .= "Apakah stoknya masih tersedia?";
                     @endphp
 
-                    <!-- Tombol Action -->
+                    <!-- Tombol Action (Dengan Autentikasi) -->
                     <div class="flex flex-col sm:flex-row gap-3">
-                        <a href="https://wa.me/{{ $waNumber }}?text={{ urlencode($pesan) }}" target="_blank" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 px-6 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg">
-                            <span class="material-symbols-outlined">chat</span>
-                            Beli via WhatsApp
-                        </a>
-                        <!-- Tombol Hubungi Penjual / Tanya-tanya -->
-                        <a href="https://wa.me/{{ $waNumber }}" target="_blank" class="bg-white border border-green-600 text-green-600 hover:bg-green-50 font-bold py-3.5 px-6 rounded-xl flex items-center justify-center transition-all">
-                            Tanya Penjual
-                        </a>
+                        @auth
+                            <a href="https://wa.me/{{ $waNumber }}?text={{ urlencode($pesan) }}" target="_blank" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 px-6 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg">
+                                <span class="material-symbols-outlined">chat</span>
+                                Beli via WhatsApp
+                            </a>
+                            <a href="https://wa.me/{{ $waNumber }}" target="_blank" class="bg-white border border-green-600 text-green-600 hover:bg-green-50 font-bold py-3.5 px-6 rounded-xl flex items-center justify-center transition-all">
+                                Tanya Penjual
+                            </a>
+                        @endauth
+
+                        @guest
+                            <a href="{{ route('login') }}" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 px-6 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg">
+                                <span class="material-symbols-outlined">lock</span>
+                                Login untuk Membeli
+                            </a>
+                            <a href="{{ route('login') }}" class="bg-white border border-green-600 text-green-600 hover:bg-green-50 font-bold py-3.5 px-6 rounded-xl flex items-center justify-center transition-all">
+                                <span class="material-symbols-outlined mr-2">lock</span>
+                                Login untuk Bertanya
+                            </a>
+                            <p class="w-full text-center text-xs text-gray-500 mt-2 sm:hidden">
+                                *Silakan masuk/daftar untuk menghubungi penjual.
+                            </p>
+                        @endguest
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Profil UMKM (Style Toko Marketplace) -->
+        <!-- Profil UMKM (Bug Tag <a> Diperbaiki) -->
         <section class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col md:flex-row items-center justify-between gap-6">
             <div class="flex items-center gap-4">
                 <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center border-2 border-green-200">
@@ -145,7 +160,7 @@
             </div>
         </section>
 
-        <!-- Produk Terkait (Grid Modern) -->
+        <!-- Produk Terkait (Path Gambar Diperbaiki) -->
         @if($relatedProducts->isNotEmpty())
             <section class="pt-8">
                 <div class="flex items-end justify-between mb-6">
