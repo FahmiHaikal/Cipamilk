@@ -26,7 +26,7 @@
         </div>
         <div class="w-full lg:w-1/2 h-72 sm:h-96 lg:h-auto relative min-h-[400px] lg:min-h-[500px]">
             <div class="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-green-50 to-transparent z-10 w-full h-full"></div>
-            <img src="{{ asset('storage/tentang/Test1.png') }}" alt="Peternakan Sapi Cipageran" class="absolute inset-0 w-full h-full object-cover">
+            <img src="{{ asset('assets/abouts/Banner.jpeg') }}" alt="Peternakan Sapi Cipageran" class="absolute inset-0 w-full h-full object-cover">
         </div>
 
     </div>
@@ -65,28 +65,30 @@
             <div class="w-full lg:w-1/2">
                 <div class="swiper tentangSwiper rounded-[2rem] shadow-md overflow-hidden">
                     <div class="swiper-wrapper">
-                        <!-- Gunakan asset('storage/tentang/...') -->
-                        <div class="swiper-slide"><img src="{{ asset('storage/tentang/Test2.png') }}" class="w-full h-auto aspect-square object-cover"></div>
-                        <div class="swiper-slide"><img src="{{ asset('storage/tentang/Test2 (copy 1).png') }}" class="w-full h-auto aspect-square object-cover"></div>
-                        <div class="swiper-slide"><img src="{{ asset('storage/tentang/Test2 (copy 2).png') }}" class="w-full h-auto aspect-square object-cover"></div>
-                        <div class="swiper-slide"><img src="{{ asset('storage/tentang/Test2 (copy 3).png') }}" class="w-full h-auto aspect-square object-cover"></div>
+                        <div class="swiper-slide"><img src="{{ asset('assets/abouts/tentang1.jpg') }}" class="w-full h-auto aspect-square object-cover"></div>
+                        <div class="swiper-slide"><img src="{{ asset('assets/abouts/tentang2.jpg') }}" class="w-full h-auto aspect-square object-cover"></div>
+                        <div class="swiper-slide"><img src="{{ asset('assets/abouts/tentang3.jpg') }}" class="w-full h-auto aspect-square object-cover"></div>
                     </div>
                     <!-- Navigasi Slider -->
                     <div class="swiper-button-next !text-white"></div>
                     <div class="swiper-button-prev !text-white"></div>
                 </div>
             </div>
-            <!-- Bagian Kanan Tetap Sama -->
-            <div class="w-full lg:w-1/2">
-                <h2 class="text-green-600 font-bold tracking-widest uppercase text-sm mb-3">Kisah Kami</h2>
-                <h3 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-6 tracking-tight">Dedikasi dari Peternak,<br>Untuk Keluarga Anda.</h3>
-                <p class="text-gray-600 leading-relaxed mb-4">
-                    Berawal dari inisiatif para peternak lokal di kawasan Cipageran, kami berkomitmen untuk tidak hanya menghasilkan susu sapi berkualitas tinggi, tetapi juga memberdayakan ekonomi warga sekitar melalui pembentukan kelompok UMKM pengolahan susu.
-                </p>
-                <p class="text-gray-600 leading-relaxed">
-                    Setiap tetes produk Super Susu Cipageran telah melewati proses kontrol kualitas yang ketat, memastikan nutrisi terbaik tetap terjaga dari peternakan hingga tiba di meja makan keluarga Anda.
-                </p>
-            </div>
+
+        <div class="w-full lg:w-1/2">
+            <h2 class="text-green-600 font-bold tracking-widest uppercase text-sm mb-3">Kisah & Budaya Kami</h2>
+            <h3 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-6 tracking-tight">Dedikasi dari Peternak,<br>Kearifan Lokal untuk Keluarga.</h3>
+            
+            <p class="text-gray-600 leading-relaxed mb-4">
+                Berawal dari inisiatif para peternak di kawasan Cipageran, kami berkomitmen untuk tidak hanya menghasilkan susu sapi berkualitas tinggi, tetapi juga memberdayakan ekonomi warga sekitar melalui pembentukan kelompok UMKM pengolahan susu.
+            </p>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                Lebih dari sekadar sentra peternakan, Cipageran mewariskan harmoni alam dan budaya agraris yang kental. Tumbuh di sejuknya wilayah utara Kota Cimahi, langkah kami selalu dijiwai oleh filosofi <span class="italic font-medium">sabilulungan</span>—kearifan lokal masyarakat Sunda tentang gotong royong dan rasa saling peduli. Semangat kebersamaan inilah yang menyatukan peternak dan perajin lokal untuk saling menopang dan berinovasi.
+            </p>
+            <p class="text-gray-600 leading-relaxed">
+                Perpaduan antara tradisi yang dijaga turun-temurun dan kontrol kualitas modern memastikan setiap tetes produk Super Susu Cipageran membawa nutrisi serta kebaikan alam, dari peternakan kami hingga tiba di meja makan keluarga Anda.
+            </p>
+        </div>
         </div>
         <!-- (Grid Visi Misi tetap sama di bawah sini) -->
     </div>
@@ -110,7 +112,6 @@
             <div class="swiper-slide h-auto">
                 <article class="bg-white rounded-2xl overflow-hidden flex flex-col h-full border border-gray-100 shadow-sm hover:shadow-lg transition-shadow duration-300 group relative">
                     <div class="bg-gray-50 p-4 h-56 flex items-center justify-center relative overflow-hidden">
-                        <!-- PERBAIKAN: asset('storage/' . $item->image) -->
                         <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->nama_produk }}" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500">
                     </div>
                     @if(isset($item->diskon) && $item->diskon > 0)

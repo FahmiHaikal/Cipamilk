@@ -1,9 +1,9 @@
 @extends('layouts.umkm')
-@section('title', 'Jurnal UMKM')
+@section('title', 'Berita')
 
 @section('content')
 <div class="umkm-page-header umkm-fade">
-    <h1>Jurnal & Prestasi</h1>
+    <h1>Berita & Prestasi</h1>
     <p>Bagikan cerita, pencapaian, atau berita terbaru toko Anda</p>
 </div>
 

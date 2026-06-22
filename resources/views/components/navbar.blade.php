@@ -4,9 +4,10 @@
             
             <!-- Logo Brand -->
             <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.location.href='{{ url('/') }}'">
-                <div class="w-9 h-9 bg-green-600 text-white rounded-xl flex items-center justify-center font-bold text-lg shadow-inner">
-                    C
-                </div>
+                <!-- Gambar Logo -->
+                <img src="{{ asset('images/cipamilk_logo.png') }}" alt="Logo CipaMilk" class="w-12 h-12 object-contain drop-shadow-sm">
+                
+                <!-- Teks Brand -->
                 <div>
                     <h1 class="font-bold text-xl text-gray-900 leading-none">Cipamilk</h1>
                     <p class="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mt-0.5">Susu Sentra Cipageran</p>

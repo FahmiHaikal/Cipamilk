@@ -22,14 +22,14 @@ Route::get('/jurnal', [ArticleController::class, 'index'])->name('article.index'
 Route::get('/jurnal/{article:slug}', [ArticleController::class, 'show'])->name('article.detail');
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 
-Route::middleware(['auth', 'role:umkm'])->prefix('umkm')->group(function () {
+Route::middleware(['auth', 'role:umkm', 'verified'])->prefix('umkm')->group(function () {
     // Rute status pending (dapat diakses oleh UMKM yang belum disetujui)
     Route::get('/pending-approval', function () {
         return view('umkm.pending');
@@ -84,8 +84,24 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::delete('/umkms/{umkm}', [App\Http\Controllers\Admin\UmkmController::class, 'destroy'])->name('admin.umkms.destroy');
 });
 
-Route::middleware(['auth', 'role:konsumen'])->group(function () {
+Route::middleware(['auth', 'role:konsumen', 'verified'])->group(function () {
 });
+
+Route::get('/dashboard', function (\Illuminate\Http\Request $request) {
+    $user = $request->user();
+
+    if ($user) {
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        } elseif ($user->role === 'umkm') {
+            return redirect()->route('umkm.dashboard');
+        } elseif ($user->role === 'konsumen') {
+            return redirect()->route('home'); 
+        }
+    }
+    
+    return redirect('/'); 
+})->name('dashboard');
 
 
 require __DIR__.'/auth.php';
