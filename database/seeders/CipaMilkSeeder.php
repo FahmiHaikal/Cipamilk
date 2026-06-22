@@ -85,7 +85,7 @@ class CipaMilkSeeder extends Seeder
                 'deskripsi' => 'Yoghurt botol segar dengan berbagai varian rasa buah asli. Cocok untuk pencernaan dan dinikmati dingin.',
                 'masa_simpan' => '7 Hari (Kulkas)',
                 'label_gizi' => 'Halal, Probiotik Alami',
-                'image' => 'products/Product6.png', // <-- Sesuai gambar
+                'image' => 'products/P1.png', // <-- Sesuai gambar
                 'diskon' => 10,
                 'rating' => 4.8,
                 'terjual' => 150,
@@ -99,7 +99,7 @@ class CipaMilkSeeder extends Seeder
                 'deskripsi' => 'Cemilan Kerupuk yang terbuat dari susu, cocok menjadi pendamping lauk biar bisa kriuk-kriuk.',
                 'masa_simpan' => '3 Bulan (Suhu ruang)',
                 'label_gizi' => 'Halal, Tinggi Kalsium',
-                'image' => 'products/Product2.png', 
+                'image' => 'products/P4.png', 
                 'diskon' => 10,
                 'rating' => 4.8,
                 'terjual' => 150,
@@ -113,7 +113,7 @@ class CipaMilkSeeder extends Seeder
                 'deskripsi' => 'Pie susu dengan isian vla susu yang lembut dan kulit pie yang renyah. Praktis untuk oleh-oleh maupun camilan keluarga.',
                 'masa_simpan' => '5 Hari (Suhu Ruang)',
                 'label_gizi' => 'Sertifikat Halal Resmi',
-                'image' => 'products/Product4.png', 
+                'image' => 'products/P5.png', 
                 'diskon' => 10,
                 'rating' => 4.8,
                 'terjual' => 150,
@@ -127,7 +127,7 @@ class CipaMilkSeeder extends Seeder
                 'deskripsi' => 'Susu sapi murni yang diprosess menjadi jajanan anak.',
                 'masa_simpan' => '4 bulan (Suhu Ruang)',
                 'label_gizi' => 'Halal, Tanpa Pengawet',
-                'image' => 'products/Product1.png', // <-- Sesuai gambar
+                'image' => 'products/P2.png', // <-- Sesuai gambar
                 'diskon' => 10,
                 'rating' => 4.8,
                 'terjual' => 150,

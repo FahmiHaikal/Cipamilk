@@ -26,7 +26,7 @@
         </div>
         <div class="w-full lg:w-1/2 h-72 sm:h-96 lg:h-auto relative min-h-[400px] lg:min-h-[500px]">
             <div class="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-green-50 to-transparent z-10 w-full h-full"></div>
-            <img src="{{ asset('storage/tentang/Banner2.jpeg') }}" alt="Peternakan Sapi Cipageran" class="absolute inset-0 w-full h-full object-cover">
+            <img src="{{ asset('assets/abouts/Banner.jpeg') }}" alt="Peternakan Sapi Cipageran" class="absolute inset-0 w-full h-full object-cover">
         </div>
 
     </div>
@@ -65,10 +65,9 @@
             <div class="w-full lg:w-1/2">
                 <div class="swiper tentangSwiper rounded-[2rem] shadow-md overflow-hidden">
                     <div class="swiper-wrapper">
-                        <!-- Gunakan asset('storage/tentang/...') -->
-                        <div class="swiper-slide"><img src="{{ asset('storage/tentang/Test1.jpg') }}" class="w-full h-auto aspect-square object-cover"></div>
-                        <div class="swiper-slide"><img src="{{ asset('storage/tentang/Test2.jpg') }}" class="w-full h-auto aspect-square object-cover"></div>
-                        <div class="swiper-slide"><img src="{{ asset('storage/tentang/Test3.jpg') }}" class="w-full h-auto aspect-square object-cover"></div>
+                        <div class="swiper-slide"><img src="{{ asset('assets/abouts/tentang1.jpg') }}" class="w-full h-auto aspect-square object-cover"></div>
+                        <div class="swiper-slide"><img src="{{ asset('assets/abouts/tentang2.jpg') }}" class="w-full h-auto aspect-square object-cover"></div>
+                        <div class="swiper-slide"><img src="{{ asset('assets/abouts/tentang3.jpg') }}" class="w-full h-auto aspect-square object-cover"></div>
                     </div>
                     <!-- Navigasi Slider -->
                     <div class="swiper-button-next !text-white"></div>
