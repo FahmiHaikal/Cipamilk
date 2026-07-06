@@ -197,7 +197,7 @@
             <article class="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow flex flex-col">
                 <div class="aspect-video bg-gray-200 relative">
                     <!-- PERBAIKAN: asset('storage/' . $article->image) -->
-                    <img src="{{ $article->image ? asset('storage/' . $article->image) : 'https://placehold.co/600x400/e2e8f0/475569?text=Berita+Cipageran' }}" alt="{{ $article->title }}" class="w-full h-full object-cover">
+                    <img src="{{ $article->image ? asset('assets/articles' . $article->image) : 'https://placehold.co/600x400/e2e8f0/475569?text=Berita+Cipageran' }}" alt="{{ $article->title }}" class="w-full h-full object-cover">
                 </div>
                 <div class="p-6 flex flex-col flex-grow">
                     <span class="text-xs font-semibold text-green-600 uppercase tracking-wider mb-2 block">

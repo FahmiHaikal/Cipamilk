@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         User::updateOrCreate(
             ['email' => 'admin@cipamilk.com'],
             [
+                'email_verified_at' => now(),
                 'name' => 'Admin Cipamilk',
                 'password' => \Illuminate\Support\Facades\Hash::make('password'),
                 'role' => 'admin',
@@ -29,6 +30,7 @@ class DatabaseSeeder extends Seeder
         User::updateOrCreate(
             ['email' => 'test@example.com'],
             [
+                'email_verified_at' => now(),
                 'name' => 'Test User',
                 'password' => \Illuminate\Support\Facades\Hash::make('password'),
                 'role' => 'konsumen',

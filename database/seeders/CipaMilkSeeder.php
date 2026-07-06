@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Product;
 use App\Models\Umkm;
-use App\Models\Article; // Pastikan Model Article di-import
+use App\Models\Article; 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -16,6 +16,7 @@ class CipaMilkSeeder extends Seeder
             ['email' => 'uden@cipamilk.com'],
             [
                 'name' => 'Bapak Uden',
+                'email_verified_at' => now(),
                 'password' => \Illuminate\Support\Facades\Hash::make('password'),
                 'role' => 'umkm',
             ]
@@ -26,7 +27,7 @@ class CipaMilkSeeder extends Seeder
             [
                 'user_id' => $userUden->id,
                 'pemilik' => 'Bapak Uden',
-                'whatsapp' => '6281234567890',
+                'whatsapp' => '6281324633699',
                 'alamat' => 'Sentra Susu Cipageran, Kota Cimahi',
                 'story' => 'Fokus menyuplai pabrik dan agen besar. Memproduksi susu pasteurisasi, yoghurt botol, dan keju mozarella berkualitas tinggi.',
                 'status' => 'approved',
@@ -37,6 +38,7 @@ class CipaMilkSeeder extends Seeder
             ['email' => 'dini@cipamilk.com'],
             [
                 'name' => 'Ibu Dini',
+                'email_verified_at' => now(),
                 'password' => \Illuminate\Support\Facades\Hash::make('password'),
                 'role' => 'umkm',
             ]
@@ -58,6 +60,7 @@ class CipaMilkSeeder extends Seeder
             ['email' => 'esih@cipamilk.com'],
             [
                 'name' => 'Ibu Esih',
+                'email_verified_at' => now(),
                 'password' => \Illuminate\Support\Facades\Hash::make('password'),
                 'role' => 'umkm',
             ]

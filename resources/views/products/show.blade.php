@@ -21,7 +21,7 @@
                 <!-- Kiri: Foto Produk -->
                 <div class="p-6 md:p-8 lg:p-10 bg-gray-50 flex flex-col justify-center items-center relative">
                     <img
-                        src="{{ asset('assets/' . $product->image) }}"
+                        src="{{ asset('storage/' . $product->image) }}"
                         alt="{{ $product->nama_produk }}"
                         class="w-full max-w-sm h-auto object-contain hover:scale-105 transition-transform duration-300"
                     >
@@ -100,7 +100,7 @@
 
                         // Merakit template pesan
                         $pesan = "Halo " . $product->umkm->pemilik . " (" . $product->umkm->nama_umkm . "),\n";
-                        $pesan .= "Saya melihat produk Anda di Web Super Susu Cipageran.\n\n";
+                        $pesan .= "Saya melihat produk Anda di Web Susu Sentra Cipageran.\n\n";
                         $pesan .= "Saya tertarik untuk memesan *" . $product->nama_produk . "*.\n";
                         $pesan .= "Apakah stoknya masih tersedia?";
                     @endphp
@@ -172,7 +172,7 @@
                     @foreach($relatedProducts as $relatedProduct)
                         <a href="{{ route('product.detail', $relatedProduct) }}" class="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-md transition-shadow group flex flex-col">
                             <div class="bg-gray-50 aspect-square p-4 flex items-center justify-center">
-                                <img src="{{ asset('assets/' . $relatedProduct->image) }}" alt="{{ $relatedProduct->nama_produk }}" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300">
+                                <img src="{{ asset('storage/' . $relatedProduct->image) }}" alt="{{ $relatedProduct->nama_produk }}" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300">
                             </div>
                             <div class="p-3 flex flex-col flex-grow">
                                 <h3 class="text-sm text-gray-700 truncate mb-1">{{ $relatedProduct->nama_produk }}</h3>
